@@ -1,0 +1,29 @@
+.header {
+  background: #939393;
+  padding: 10px;
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.body {
+  margin: 0 20px 0 20px;
+  text-align: justify;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.footerItem {
+  flex-grow: 1;
+  background: #939393;
+  margin: 0 4px 10px 4px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 2px;
+  text-decoration: none;
+}
