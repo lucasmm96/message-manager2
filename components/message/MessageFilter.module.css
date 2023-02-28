@@ -6,3 +6,15 @@
 .rowItem {
   flex-grow: 1;
 }
+
+.rowItem:hover {
+  background: #939393;
+  color: white;
+  transition: 0.1s;
+  border-radius: 5px;
+  
+}
+
+.padingX {
+  padding: 0 80px 0 80px;
+}
