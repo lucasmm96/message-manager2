@@ -5,7 +5,7 @@ import MessageFilter from '@/components/message/messageFilter';
 import MessageItem from '@/components/message/MessageItem';
 
 export default function Home(props) {
-	const [messages, setMessages] = useState(props.messages.filteredData);
+	const [messages, setMessages] = useState(props.messages);
 
 	function applyFilter(data) {
 		setMessages(data);
@@ -28,10 +28,7 @@ export async function getServerSideProps() {
 
 	return {
 		props: {
-			messages: {
-				fullData: data,
-				filteredData: data,
-			},
+			messages: data
 		},
 	};
 }

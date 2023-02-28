@@ -1,7 +1,7 @@
 import classes from './MessageFilter.module.css';
 
 function MessageFilter(props) {
-	const messages = props.data.fullData;
+	const messages = props.data;
 
 	function allMessages() {
 		props.onApplyFilter(messages);
