@@ -1,18 +1,41 @@
 import classes from './MessageFilter.module.css';
 
 function MessageFilter(props) {
-	function filterData() {
-		const messages = props.data;
-		const filtered = messages.filter((message) => message.postUrl.story === '');
-		props.onPostFilter(filtered);
+	const messages = props.data.fullData;
+
+	function allMessages() {
+		props.onApplyFilter(messages);
 	}
 
+	function onlyStory() {
+		props.onApplyFilter(
+			messages.filter((message) => message.postUrl.story === '')
+		);
+	}
+
+	// function posted() {
+
+	// 	console.log(messages.filter((message) => message.postedAt));
+		
+	// 	props.onApplyFilter(messages);
+
+	// }
+
+	// function notPosted() {
+
+	// }
+
 	return (
-		<div className={classes.row}>
-			<div className={classes.rowItem}>
-				<button onClick={filterData}>Sem Story</button>
-			</div>
-			<div className={classes.rowItem}>Botão 02</div>
+		<div className={`${classes.row} ${classes.padingX}`}>
+			<button className={classes.rowItem} onClick={allMessages}>
+				All
+			</button>
+			<button className={classes.rowItem} onClick={onlyStory}>
+				Only Story
+			</button>
+			{/* <button className={classes.rowItem} onClick={posted}>Posted</button> */}
+			{/* 
+			<button className={classes.rowItem} onClick={notPosted}>Not Posted</button> */}
 		</div>
 	);
 }
