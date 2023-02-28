@@ -16,12 +16,12 @@ function MessageItem(props) {
 					</div>
 					<div className={classes.footer}>
 						{message.postUrl.post && (
-							<Link href={message.postUrl.post} className={classes.footerItem} target="_blank">
+							<Link href={message.postUrl.post} className={`${classes.footerItem} ${classes.messageItemButton}`} target="_blank">
 								Post
 							</Link>
 						)}
 						{message.postUrl.story && (
-							<Link href={message.postUrl.story} className={classes.footerItem} target="_blank">
+							<Link href={message.postUrl.story} className={`${classes.footerItem} ${classes.messageItemButton}`} target="_blank">
 								Story
 							</Link>
 						)}

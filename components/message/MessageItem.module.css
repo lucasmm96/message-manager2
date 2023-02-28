@@ -20,6 +20,9 @@
 
 .footerItem {
   flex-grow: 1;
+}
+
+.messageItemButton {
   background: #939393;
   margin: 0 4px 10px 4px;
   color: black;
