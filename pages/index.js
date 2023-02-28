@@ -15,6 +15,7 @@ export default function Home(props) {
 		<>
 			<Head title="Message Manager" />
 			<h1>Messages</h1>
+			<h3>Records: {messages.length}</h3>
 			<MessageFilter data={props.messages} onApplyFilter={applyFilter} />
 			<MessageItem messages={messages} />
 		</>

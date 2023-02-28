@@ -7,35 +7,31 @@ function MessageFilter(props) {
 		props.onApplyFilter(messages);
 	}
 
-	function onlyStory() {
-		props.onApplyFilter(
-			messages.filter((message) => message.postUrl.story === '')
+	function posted() {
+		const filteredData = messages.filter(
+			(message) => new Date(message.postedAt) <= new Date()
 		);
+		props.onApplyFilter(filteredData);
 	}
 
-	// function posted() {
-
-	// 	console.log(messages.filter((message) => message.postedAt));
-		
-	// 	props.onApplyFilter(messages);
-
-	// }
-
-	// function notPosted() {
-
-	// }
+	function notPosted() {
+		const filteredData = messages.filter(
+			(message) => new Date(message.postedAt) >= new Date()
+		);
+		props.onApplyFilter(filteredData);
+	}
 
 	return (
-		<div className={`${classes.row} ${classes.padingX}`}>
+		<div className={classes.row}>
 			<button className={classes.rowItem} onClick={allMessages}>
 				All
 			</button>
-			<button className={classes.rowItem} onClick={onlyStory}>
-				Only Story
+			<button className={classes.rowItem} onClick={posted}>
+				Posted
 			</button>
-			{/* <button className={classes.rowItem} onClick={posted}>Posted</button> */}
-			{/* 
-			<button className={classes.rowItem} onClick={notPosted}>Not Posted</button> */}
+			<button className={classes.rowItem} onClick={notPosted}>
+				Not Posted
+			</button>
 		</div>
 	);
 }
