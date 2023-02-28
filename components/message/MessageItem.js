@@ -1,44 +1,47 @@
-import Link from 'next/link';
-
 import classes from '@/components/message/MessageItem.module.css';
 
 import Card from '@/components/ui/Card';
+import MessageItemBody from './MessageItemBody';
+import MessageItemOptions from './MessageItemOptions';
 
 function MessageItem(props) {
 	return (
-		<>
+		<div className="container">
 			{props.messages.map((message) => (
-				<Card key={message._id}>
-					<div className={classes.header}>{message.postedAt}</div>
-					<div className={classes.body}>
-						<p>{message.message}</p>
-						<p><i>{message.author}</i></p>
-					</div>
-					<div className={classes.footer}>
-						{message.postUrl.post && (
-							<Link href={message.postUrl.post} className={`${classes.footerItem} ${classes.messageItemButton}`} target="_blank">
-								Post
-							</Link>
-						)}
-						{message.postUrl.story && (
-							<Link href={message.postUrl.story} className={`${classes.footerItem} ${classes.messageItemButton}`} target="_blank">
-								Story
-							</Link>
-						)}
-					</div>
-				</Card>
+				<Card
+					key={message._id}
+					header={message.postedAt}
+					body={
+						<div className={classes.itemContainer}>
+							<MessageItemBody
+								message={message.message}
+								author={message.author}
+							/>
+						</div>
+					}
+					footer={
+						<div className={classes.itemContainer}>
+							<MessageItemOptions
+								link={message.postUrl.post ? message.postUrl.post : ''}
+								label="Post"
+								newTab={true}
+							/>
+							<MessageItemOptions
+								link={message.postUrl.story ? message.postUrl.story : ''}
+								label="Story"
+								newTab={true}
+							/>
+							<MessageItemOptions
+								link="/edit-message"
+								label="Edit"
+								newTab={false}
+							/>
+						</div>
+					}
+				/>
 			))}
-		</>
+		</div>
 	);
 }
 
 export default MessageItem;
-
-{
-	/* <div className={classes.footer}>
-<ul className={classes.flexContainer}>
-  <li className={classes.flexItem}>{message.postUrl.post}</li>
-  <li className={classes.flexItem}>{message.postUrl.story}</li>
-</ul>
-</div> */
-}
