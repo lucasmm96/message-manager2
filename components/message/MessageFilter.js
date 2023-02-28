@@ -7,14 +7,14 @@ function MessageFilter(props) {
 		props.onApplyFilter(messages);
 	}
 
-	function posted() {
+	function postedMessages() {
 		const filteredData = messages.filter(
 			(message) => new Date(message.postedAt) <= new Date()
 		);
 		props.onApplyFilter(filteredData);
 	}
 
-	function notPosted() {
+	function notPostedMessages() {
 		const filteredData = messages.filter(
 			(message) => new Date(message.postedAt) >= new Date()
 		);
@@ -26,10 +26,10 @@ function MessageFilter(props) {
 			<button className={classes.rowItem} onClick={allMessages}>
 				All
 			</button>
-			<button className={classes.rowItem} onClick={posted}>
+			<button className={classes.rowItem} onClick={postedMessages}>
 				Posted
 			</button>
-			<button className={classes.rowItem} onClick={notPosted}>
+			<button className={classes.rowItem} onClick={notPostedMessages}>
 				Not Posted
 			</button>
 		</div>
