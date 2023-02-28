@@ -1,13 +1,22 @@
-import Head from '@/components/layout/CustomHead';
+import { useState } from 'react';
 
+import Head from '@/components/layout/CustomHead';
+import MessageFilter from '@/components/message/messageFilter';
 import MessageItem from '@/components/message/MessageItem';
 
 export default function Home(props) {
+	const [messages, setMessages] = useState(props.messages);
+
+	function postFilter(data) {
+		setMessages(data);
+	}
+
 	return (
 		<>
 			<Head title="Message Manager" />
 			<h1>Messages</h1>
-			<MessageItem messages={props.messages} />
+			<MessageFilter data={messages} onPostFilter={postFilter} />
+			<MessageItem messages={messages} />
 		</>
 	);
 }
