@@ -1,18 +1,11 @@
-.row {
-  display: flex;
-  justify-content: space-around;
-  padding: 0 50px 0 50px;
-}
-
-.rowItem {
-  flex-grow: 1;
-  margin: 10px;
-}
-
-.rowItem:hover {
-  background: #939393;
-  color: white;
-  transition: 0.1s;
-  border-radius: 5px;
-  cursor: pointer;
+.filterContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	max-width: 100%;
+	margin: 0 auto 50px auto;
+	padding: 20px;
+	box-sizing: border-box;
+	background-color: #f2f2f2;
 }
