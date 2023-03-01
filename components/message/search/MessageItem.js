@@ -32,7 +32,7 @@ function MessageItem(props) {
 								newTab={true}
 							/>
 							<MessageItemOptions
-								link="/edit-message"
+								link={`/edit-message/${message._id}`}
 								label="Edit"
 								newTab={false}
 							/>
