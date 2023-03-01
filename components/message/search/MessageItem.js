@@ -1,4 +1,4 @@
-import classes from '@/components/message/MessageItem.module.css';
+import classes from './MessageItem.module.css';
 
 import Card from '@/components/ui/Card';
 import MessageItemBody from './MessageItemBody';

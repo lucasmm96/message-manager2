@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Head from '@/components/layout/CustomHead';
-import MessageFilter from '@/components/message/messageFilter';
-import MessageItem from '@/components/message/MessageItem';
+import MessageFilter from '@/components/message/search/messageFilter';
+import MessageItem from '@/components/message/search/MessageItem';
 
 export default function Home(props) {
 	const [messages, setMessages] = useState(props.messages);
