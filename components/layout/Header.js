@@ -7,7 +7,7 @@ function MainNavigation() {
 			<nav>
 				<ul>
 					<li className={`${classes.logo} ${classes.left}`}>
-						<Link href="#">Message Manager</Link>
+						<Link href="/">Message Manager</Link>
 					</li>
 					<li className={classes.right}>
 						<Link href="/add-message">Add New Message</Link>
