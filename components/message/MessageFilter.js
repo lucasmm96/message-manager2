@@ -6,7 +6,7 @@ import MessageFilterButton from './MessageFilterButton';
 
 function MessageFilter(props) {
 	const messages = props.data;
-	const [isAllMessagesSelected, setIsAllMessagesSelected] = useState(false);
+	const [isAllMessagesSelected, setIsAllMessagesSelected] = useState(true);
 	const [isPostedMessagesSelected, setIsPostedMessagesSelected] =
 		useState(false);
 	const [isNotPostedMessagesSelected, setIsNotPostedMessagesSelected] =
