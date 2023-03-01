@@ -1,5 +1,5 @@
 .main {
-  margin: 4rem auto;
-  width: 100%;
-  max-width: 100rem;
+	box-sizing: border-box;
+	background-color: lightgray;
+	padding: 3% 5% 3% 5%;
 }
