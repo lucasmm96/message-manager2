@@ -23,16 +23,23 @@ function MessageItem(props) {
 						<div className={classes.itemContainer}>
 							<MessageItemOptions
 								link={message.postUrl.post ? message.postUrl.post : ''}
+								data=""
 								label="Post"
 								newTab={true}
 							/>
 							<MessageItemOptions
 								link={message.postUrl.story ? message.postUrl.story : ''}
+								data=""
 								label="Story"
 								newTab={true}
 							/>
 							<MessageItemOptions
-								link={`/edit-message/${message._id}`}
+								link={'/edit-message/'}
+								data={{
+									...message,
+									postUrlPost: message.postUrl.post,
+									postUrlStory: message.postUrl.story,
+								}}
 								label="Edit"
 								newTab={false}
 							/>

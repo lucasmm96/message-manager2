@@ -3,9 +3,10 @@ import Link from 'next/link';
 
 function MessageItemOptions(props) {
 	const isAvailable = props.link ? '' : classes.disabledItemLink;
+
 	return (
 		<Link
-			href={props.link}
+			href={{ pathname: props.link, query: props.data }}
 			className={`${classes.itemLink} ${isAvailable}`}
 			target={props.newTab ? '_blank' : ''}
 		>
