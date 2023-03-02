@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import Form from '@/components/ui/Form';
+
 function EditMessage() {
 	const router = useRouter();
 	const message = {
@@ -24,8 +26,11 @@ function EditMessage() {
 			<p><b>postedAt:</b> {message.postedAt}</p>
 			<p><b>postUrl(post):</b> {message.postUrl.post}</p>
 			<p><b>postUrl(story):</b> {message.postUrl.story}</p>
+			
+			<Form />
 		</>
 	);
 }
+// por favor, gere com html e css um form com os seguintes campos: "message" (tipo text), "author" (tipo text), "post" (tipo url) e "story" (tipo url). todos os campos são obrigatórios. este formulario deve ter um botão de submit e um cancel.
 
 export default EditMessage;
