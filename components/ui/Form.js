@@ -1,19 +1,9 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 import classes from './Form.module.css';
 
 function Form(props) {
-	const router = useRouter();
-
-	const [formState, setFormState] = useState({
-		_id: props.data._id,
-		message: props.data.message,
-		author: props.data.author,
-		postedAt: props.data.postedAt,
-		urlPost: props.data.urlPost,
-		urlStory: props.data.urlStory,
-	});
+	const [formState, setFormState] = useState({ ...props.data });
 
 	function changeHandler(event) {
 		setFormState({ ...formState, [event.target.name]: event.target.value });
@@ -21,17 +11,17 @@ function Form(props) {
 
 	function submitHandler(event) {
 		event.preventDefault();
-		console.log(formState);
+		props.onSubmitHandler(formState);
 	}
 
 	function cancelHandler() {
-		router.push('/');
+		props.onCancelHandler();
 	}
 
 	return (
 		<form className={classes.form}>
 			{props.fields.map((field) => (
-				<div className={classes.formGroup}>
+				<div key={field.name} className={classes.formGroup}>
 					<label htmlFor={field.name}>{field.label}</label>
 					<input
 						type={field.type}
