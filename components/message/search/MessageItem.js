@@ -37,8 +37,8 @@ function MessageItem(props) {
 								link={'/edit-message/'}
 								data={{
 									...message,
-									postUrlPost: message.postUrl.post,
-									postUrlStory: message.postUrl.story,
+									urlPost: message.postUrl.post,
+									urlStory: message.postUrl.story,
 								}}
 								label="Edit"
 								newTab={false}
