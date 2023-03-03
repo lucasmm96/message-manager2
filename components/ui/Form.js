@@ -10,7 +10,8 @@ function Form(props) {
 						type={field.type}
 						id={field.name}
 						name={field.name}
-						required={field.required ? true : false}
+						{...(field.required && { required: true })}
+						value={field.data}
 					/>
 				</div>
 			))}
