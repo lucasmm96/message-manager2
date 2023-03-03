@@ -1,6 +1,14 @@
+import { useRouter } from 'next/router';
+
 import classes from './Form.module.css';
 
 function Form(props) {
+	const router = useRouter();
+
+	function cancelHandler() {
+		router.push('/');
+	}
+
 	return (
 		<form className={classes.form}>
 			{props.fields.map((field) => (
@@ -19,7 +27,12 @@ function Form(props) {
 				<button className={classes.formContainerItem} type="submit">
 					Submit
 				</button>
-				<button className={classes.formContainerItem} type="button" id="cancel">
+				<button
+					className={classes.formContainerItem}
+					type="button"
+					id="cancel"
+					onClick={cancelHandler}
+				>
 					Cancel
 				</button>
 			</div>
