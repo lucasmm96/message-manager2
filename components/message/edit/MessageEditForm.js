@@ -24,14 +24,14 @@ function MessageEditForm(props) {
 			data: props.data.postedAt,
 		},
 		{
-			name: 'post',
+			name: 'urlPost',
 			label: 'Post Link',
 			type: 'url',
 			required: false,
 			data: props.data.urlPost,
 		},
 		{
-			name: 'story',
+			name: 'urlStory',
 			label: 'Story Link',
 			type: 'url',
 			required: false,
@@ -39,9 +39,13 @@ function MessageEditForm(props) {
 		},
 	];
 
+	function submitHandler(data) {
+		
+	}
+	
 	return (
 		<div className="container">
-			<Form fields={fields} />
+			<Form fields={fields} data={props.data} onSubmitHandler={submitHandler} />
 		</div>
 	);
 }
