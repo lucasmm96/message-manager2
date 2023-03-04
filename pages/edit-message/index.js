@@ -9,7 +9,7 @@ function EditMessage() {
 
 	return (
 		<>
-			<Head />
+			<Head title="Edit Message" />
 			<MessageEdit data={message} />
 		</>
 	);
