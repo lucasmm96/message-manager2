@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import Link from 'next/link';
 
 import classes from './Form.module.css';
+import Icon from '@/components/ui/Icon';
 
 function Form(props) {
 	const [formState, setFormState] = useState({ ...props.data });
@@ -22,7 +24,16 @@ function Form(props) {
 		<form className={classes.form}>
 			{props.fields.map((field) => (
 				<div key={field.name} className={classes.formGroup}>
-					<label htmlFor={field.name}>{field.label}</label>
+					{field.type === 'url' && formState[field.name] ? (
+						<div>
+							<label htmlFor={field.name}>{field.label}</label>
+							<Link href={formState[field.name]} target="_blank">
+								<Icon filename="link.svg" alt="link" w={20} h={20} />
+							</Link>
+						</div>
+					) : (
+						<label htmlFor={field.name}>{field.label}</label>
+					)}
 					<input
 						type={field.type}
 						id={field.name}
@@ -31,6 +42,7 @@ function Form(props) {
 						value={formState[field.name] || ''}
 						onChange={changeHandler}
 					/>
+					{/* {field.type === 'url' && <Icon filename='link.svg' alt='link' w={30} h={30} />} */}
 				</div>
 			))}
 			<div className={classes.formContainer}>
