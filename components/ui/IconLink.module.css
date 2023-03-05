@@ -1,0 +1,7 @@
+.iconColor {
+  fill: red;
+}
+
+.iconColor:hover {
+  fill: green
+}
