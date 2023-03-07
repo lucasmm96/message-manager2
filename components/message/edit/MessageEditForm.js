@@ -1,9 +1,22 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import Form from '@/components/ui/Form';
+import Modal from '@/components/ui/Modal';
 
 function MessageEditForm(props) {
 	const router = useRouter();
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	function handleOpenModal() {
+		setIsModalOpen(true);
+	}
+
+	function handleCloseModal() {
+		setIsModalOpen(false);
+		router.push('/');
+	}
 
 	const fields = [
 		{
@@ -74,9 +87,10 @@ function MessageEditForm(props) {
 				},
 				body: JSON.stringify(bodyData),
 			});
-			
-			console.log(response);
-			
+
+			if (response.ok) {
+				handleOpenModal();
+			}
 		} catch (error) {}
 	}
 
@@ -85,14 +99,20 @@ function MessageEditForm(props) {
 	}
 
 	return (
-		<div className="container">
-			<Form
-				fields={fields}
-				data={structuredData}
-				onSubmitHandler={submitHandler}
-				onCancelHandler={cancelHandler}
-			/>
-		</div>
+		<>
+			<Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+				<h2>Título do modal</h2>
+				<p>Conteúdo do modal</p>
+			</Modal>
+			<div className="container">
+				<Form
+					fields={fields}
+					data={structuredData}
+					onSubmitHandler={submitHandler}
+					onCancelHandler={cancelHandler}
+				/>
+			</div>
+		</>
 	);
 }
 
