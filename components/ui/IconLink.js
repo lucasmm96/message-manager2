@@ -10,6 +10,7 @@ function IconLink(props) {
 			target={props.newTab ? '_blank' : ''}
 		>
 			<Icon filename={props.filename} alt={props.alt} w={props.w} h={props.h} />
+			{props.text ? <span className={classes.text}>{props.text}</span> : ''}
 		</Link>
 	);
 }

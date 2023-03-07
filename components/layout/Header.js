@@ -1,13 +1,23 @@
 import classes from './Header.module.css';
 import Link from 'next/link';
 
+import IconLink from '../ui/IconLink';
+
 function MainNavigation() {
 	return (
 		<header className={classes.header}>
 			<nav>
 				<ul>
 					<li className={`${classes.logo} ${classes.left}`}>
-						<Link href="/">Message Manager</Link>
+						<IconLink
+							href={'/'}
+							newTab={true}
+							filename="logo.svg"
+							alt="Logo"
+							text="Message Manager"
+							w={20}
+							h={20}
+						/>
 					</li>
 					<li className={classes.right}>
 						<Link href="/add-message">Add New Message</Link>
@@ -22,3 +32,13 @@ function MainNavigation() {
 }
 
 export default MainNavigation;
+{
+	/* <Link
+className={classes.iconColor}
+href={props.href}
+target={props.newTab ? '_blank' : ''}
+>
+<Icon filename={props.filename} alt={props.alt} w={props.w} h={props.h} />
+</Link>
+); */
+}
