@@ -67,10 +67,16 @@ function MessageEditForm(props) {
 		];
 
 		try {
-			await fetch('http://localhost:3000/message/update', {
+			const response = await fetch('http://localhost:3000/message/update', {
 				method: 'POST',
-				body: bodyData,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(bodyData),
 			});
+			
+			console.log(response);
+			
 		} catch (error) {}
 	}
 
