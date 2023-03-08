@@ -80,7 +80,8 @@ function MessageEditForm(props) {
 		];
 
 		try {
-			const response = await fetch('http://localhost:3000/message/update', {
+			const API_URL = process.env.API_URL;
+			const response = await fetch(`${API_URL}/message/update`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

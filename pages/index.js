@@ -11,7 +11,8 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-	const response = await fetch('http://localhost:3000/message/list', {
+	const API_URL = process.env.API_URL;
+	const response = await fetch(`${API_URL}/message/list`, {
 		method: 'GET',
 	});
 	const data = await response.json();
