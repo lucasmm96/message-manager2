@@ -11,8 +11,7 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-	const API_URL = process.env.API_URL;
-	const response = await fetch(`${API_URL}/message/list`, {
+	const response = await fetch(`${process.env.API_URL}/message/list`, {
 		method: 'GET',
 	});
 	const data = await response.json();
