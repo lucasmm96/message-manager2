@@ -10,12 +10,16 @@ export default function MessageSearch(props) {
 		setMessages(data);
 	}
 
+	const messagesLength = messages.length;
+	const emptyMessage = messagesLength <= 0;
+
 	return (
 		<>
 			<h1>Messages</h1>
-			<h3>Records: {messages.length}</h3>
+			<h3>Records: {messagesLength}</h3>
 			<MessageFilter data={props.messages} onApplyFilter={applyFilter} />
-			<MessageItem messages={messages} />
+			{emptyMessage && <h3 className="textCenter">No Matches Found</h3>}
+			{!emptyMessage && <MessageItem messages={messages} />}
 		</>
 	);
 }

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import classes from './MessageFilter.module.css';
 
 import MessageFilterButton from './MessageFilterButton';
+import MessageFilterInput from './MessageFilterInput';
 
 function MessageFilter(props) {
 	const messages = props.data;
@@ -11,13 +12,17 @@ function MessageFilter(props) {
 		allMessages: true,
 		postedMessages: false,
 		notPostedMessages: false,
+		customSearch: false,
 	});
+
+	const [searchText, setSearchText] = useState('');
 
 	function allMessages() {
 		setSelections({
 			allMessages: true,
 			postedMessages: false,
 			notPostedMessages: false,
+			customSearch: false,
 		});
 		props.onApplyFilter(messages);
 	}
@@ -31,6 +36,7 @@ function MessageFilter(props) {
 			allMessages: false,
 			postedMessages: true,
 			notPostedMessages: false,
+			customSearch: false,
 		});
 		props.onApplyFilter(filteredData);
 	}
@@ -43,7 +49,36 @@ function MessageFilter(props) {
 			allMessages: false,
 			postedMessages: false,
 			notPostedMessages: true,
+			customSearch: false,
 		});
+		props.onApplyFilter(filteredData);
+	}
+
+	function changeHandler(event) {
+		setSearchText(event.target.value);
+		customSearch();
+	}
+
+	function customSearch() {
+		let filteredData = messages;
+
+		if (searchText.length > 0) {
+			filteredData = messages.filter((item) => {
+				return (
+					item.message.toLowerCase().includes(searchText.toLowerCase()) ||
+					item.author.toLowerCase().includes(searchText.toLowerCase()) ||
+					item.postedAt.includes(searchText)
+				);
+			});
+		}
+
+		setSelections({
+			allMessages: false,
+			postedMessages: false,
+			notPostedMessages: false,
+			customSearch: true,
+		});
+
 		props.onApplyFilter(filteredData);
 	}
 
@@ -63,6 +98,13 @@ function MessageFilter(props) {
 				method={notPostedMessages}
 				label="Not Posted"
 				selected={selections.notPostedMessages}
+			/>
+			<MessageFilterInput
+				method={customSearch}
+				label="Custom Search"
+				selected={selections.customSearch}
+				value={searchText}
+				onChangeHandler={changeHandler}
 			/>
 		</div>
 	);
