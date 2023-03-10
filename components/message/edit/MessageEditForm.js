@@ -134,11 +134,76 @@ function MessageEditForm(props) {
 			}
 
 			handleOpenModal(resultFilename, resultAlt, resultText);
-		} catch (error) {}
+		} catch (error) {
+			let resultFilename = 'circle-xmark-solid.svg';
+			let resultAlt = 'Error';
+			let resultText = `Something went wrong. Error: (${error}).`;
+			handleOpenModal(resultFilename, resultAlt, resultText);
+		}
 	}
 
 	function cancelHandler() {
 		router.push('/');
+	}
+
+	async function deleteHandler(data) {
+		const bodyData = [{ _id: data._id }];
+
+		try {
+			const response = await fetch(`${process.env.API_URL}/message/delete`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(bodyData),
+			});
+
+			const statusCode = response.status;
+			let resultFilename = 'circle-xmark-solid.svg';
+			let resultAlt = 'Error';
+			let resultText = 'Something went wrong';
+
+			if (statusCode === 200) {
+				resultFilename = 'circle-check-solid.svg';
+				resultAlt = 'Sucess';
+				resultText = 'The request has been successfully processed';
+			}
+
+			if (statusCode === 202 || statusCode === 204) {
+				resultFilename = 'circle-exclamation-solid.svg';
+				resultAlt = 'Warning';
+			}
+
+			if (statusCode === 202) {
+				resultText = 'The request has been partially processed.';
+			}
+
+			if (statusCode === 204) {
+				resultText = 'The request is empty.';
+			}
+
+			if (statusCode === 400) {
+				resultFilename = 'circle-xmark-solid.svg';
+				resultAlt = 'Error';
+				resultText = 'The request has failed.';
+			}
+
+			if (statusCode >= 500) {
+				resultFilename = 'circle-xmark-solid.svg';
+				resultAlt = 'Error';
+				resultText = response.json();
+				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
+			}
+
+			handleOpenModal(resultFilename, resultAlt, resultText);
+		} catch (error) {
+			let resultFilename = 'circle-xmark-solid.svg';
+			let resultAlt = 'Error';
+			let resultText = `Something went wrong. Error: (${error}).`;
+			handleOpenModal(resultFilename, resultAlt, resultText);
+		}
+
+		// router.push('/');
 	}
 
 	return (
@@ -163,6 +228,7 @@ function MessageEditForm(props) {
 					data={structuredData}
 					onSubmitHandler={submitHandler}
 					onCancelHandler={cancelHandler}
+					onDeleteHandler={deleteHandler}
 				/>
 			</div>
 		</>

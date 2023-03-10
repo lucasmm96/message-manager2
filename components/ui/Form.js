@@ -15,8 +15,14 @@ function Form(props) {
 		props.onSubmitHandler(formState);
 	}
 
-	function cancelHandler() {
+	function cancelHandler(event) {
+		event.preventDefault();
 		props.onCancelHandler();
+	}
+
+	function deleteHandler(event) {
+		event.preventDefault();
+		props.onDeleteHandler(formState);
 	}
 
 	return (
@@ -54,7 +60,7 @@ function Form(props) {
 					type="submit"
 					onClick={submitHandler}
 				>
-					Submit
+					Save
 				</button>
 				<button
 					className={classes.formContainerItem}
@@ -63,6 +69,14 @@ function Form(props) {
 					onClick={cancelHandler}
 				>
 					Cancel
+				</button>
+				<button
+					className={classes.formContainerItem}
+					type="button"
+					id="delete"
+					onClick={deleteHandler}
+				>
+					Delete
 				</button>
 			</div>
 		</form>

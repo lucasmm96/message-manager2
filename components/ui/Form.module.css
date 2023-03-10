@@ -23,10 +23,37 @@
 
 .formContainerItem {
 	margin: 0 20px;
-	width: 35%;
+	width: 30%;
 	font-size: 17px;
 }
 
+@media screen and (max-width: 1920px) {
+	.formContainerItem {
+		width: 30%;
+		margin-top: 20px;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.formContainerItem {
+		width: 90%;
+		margin-top: 20px;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.formContainerItem {
+		width: 90%;
+		margin-top: 20px;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.formContainerItem {
+		width: 90%;
+		margin-top: 20px;
+	}
+}
 @media screen and (max-width: 768px) {
 	.formContainerItem {
 		width: 90%;
