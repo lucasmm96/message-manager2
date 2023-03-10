@@ -16,3 +16,7 @@
 	background-color: #005c8a;
 	transition: 0.1s;
 }
+
+.selected {
+	background-color: #005c8a;
+}

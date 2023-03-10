@@ -4,6 +4,7 @@ import Button from '@/components/ui/Button';
 
 function MessageFilterButton(props) {
 	const isSelected = props.selected ? classes.selected : '';
+
 	return (
 		<Button
 			classes={`${isSelected} containerItem`}
