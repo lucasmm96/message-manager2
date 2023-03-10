@@ -84,7 +84,7 @@
 .form button[type='submit'],
 .form button[type='button'] {
 	padding: 0.5rem 1rem;
-	background-color: #007bff;
+	background-color: #008cba;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -95,5 +95,5 @@
 
 .form button[type='submit']:hover,
 .form button[type='button']:hover {
-	background-color: #4caf50;
+	background-color: #005c8a;
 }
