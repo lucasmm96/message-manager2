@@ -1,4 +1,3 @@
-import Icon from './Icon';
 import classes from './Modal.module.css';
 
 function Modal(props) {
@@ -9,10 +8,9 @@ function Modal(props) {
 	return (
 		<div className={classes.modalOverlay}>
 			<div className={classes.modal}>
-				<div className={classes.modalClose} onClick={props.onClose}>
-					<Icon filename="close.svg" alt="Close Modal" w={25} h={25} />
-				</div>
-				<div className={classes.modalContent}>{props.children}</div>
+				<div className={classes.modalHeader}>{props.header}</div>
+				<div className={classes.modalBody}>{props.body}</div>
+				<div className={classes.modalFooter}>{props.footer}</div>
 			</div>
 		</div>
 	);
