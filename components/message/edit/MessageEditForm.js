@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import Form from '@/components/ui/Form';
 import Modal from '@/components/ui/Modal';
+import Button from '@/components/ui/Button';
 
 function MessageEditForm(props) {
 	const router = useRouter();
@@ -100,10 +101,12 @@ function MessageEditForm(props) {
 
 	return (
 		<>
-			<Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-				<h2>Título do modal</h2>
-				<p>Conteúdo do modal</p>
-			</Modal>
+			<Modal
+				isOpen={isModalOpen}
+				header={'Result'}
+				body={'The request has been sucessfully processed.'}
+				footer={<Button click={handleCloseModal} label={'OK'} />}
+			/>
 			<div className="container">
 				<Form
 					fields={fields}
