@@ -11,7 +11,7 @@ function MainNavigation() {
 					<li className={`${classes.logo} ${classes.left}`}>
 						<IconLink
 							href={'/'}
-							newTab={true}
+							newTab={false}
 							filename="logo.svg"
 							alt="Logo"
 							text="Message Manager"
