@@ -1,18 +1,4 @@
-.itemLink {
-	margin: 0 10px;
-	font-size: 20px;
-	text-decoration: none;
-	padding-bottom: 5px;
-	border-bottom: 2px solid transparent;
-	color: #4caf50;
-}
-
-.itemLink:hover {
-	border-bottom: 2px solid #4caf50;
-}
-
-.disabledItemLink {
+.disabled {
+	background-color: #a1a1a1;
 	pointer-events: none;
-	cursor: default;
-	color: red;
 }

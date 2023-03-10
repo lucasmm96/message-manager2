@@ -1,17 +1,34 @@
+import { useRouter } from 'next/router';
+
 import classes from './MessageItemOptions.module.css';
-import Link from 'next/link';
+import Button from '@/components/ui/Button';
 
 function MessageItemOptions(props) {
-	const isAvailable = props.link ? '' : classes.disabledItemLink;
+	const link = props.link ? props.link : '';
+	const isAvailable = props.link ? '' : classes.disabled;
+	const data = props.data ? props.data : '';
+	const newTab = props.newTab;
+
+	const router = useRouter();
+
+	function navigateToPage() {
+		const query = { ...data };
+		if (newTab) {
+			window.open(link, '_blank');
+		} else {
+			router.push({
+				pathname: link,
+				query,
+			});
+		}
+	}
 
 	return (
-		<Link
-			href={{ pathname: props.link, query: props.data }}
-			className={`${classes.itemLink} ${isAvailable}`}
-			target={props.newTab ? '_blank' : ''}
-		>
-			{props.label}
-		</Link>
+		<Button
+			classes={`${isAvailable}`}
+			click={navigateToPage}
+			label={props.label}
+		/>
 	);
 }
 
