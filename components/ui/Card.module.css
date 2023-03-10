@@ -28,3 +28,9 @@
 .cardFooter button {
 	width: 30%;
 }
+
+@media screen and (max-width: 1760px) {
+	.cardFooter button {
+		width: 100%;
+	}
+}
