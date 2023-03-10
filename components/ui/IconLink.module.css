@@ -1,11 +1,3 @@
-.iconColor {
-  fill: red;
-}
-
-.iconColor:hover {
-  fill: green
-}
-
 .text {
   margin-left: 10px;
 }
