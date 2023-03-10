@@ -4,13 +4,20 @@ import { useState } from 'react';
 import Form from '@/components/ui/Form';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
+import Icon from '@/components/ui/Icon';
 
 function MessageEditForm(props) {
 	const router = useRouter();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [resultFilename, setResultFilename] = useState('');
+	const [resultAlt, setResultAlt] = useState('');
+	const [resultText, setResultText] = useState('');
 
-	function handleOpenModal() {
+	function handleOpenModal(resultFilename, resultAlt, resultText) {
+		setResultFilename(resultFilename);
+		setResultAlt(resultAlt);
+		setResultText(resultText);
 		setIsModalOpen(true);
 	}
 
@@ -89,9 +96,44 @@ function MessageEditForm(props) {
 				body: JSON.stringify(bodyData),
 			});
 
-			if (response.ok) {
-				handleOpenModal();
+			const statusCode = response.status;
+			let resultFilename = 'circle-xmark-solid.svg';
+			let resultAlt = 'Error';
+			let resultText = 'Something went wrong';
+
+			if (statusCode === 200) {
+				resultFilename = 'circle-check-solid.svg';
+				resultAlt = 'Sucess';
+				resultText = 'The request has been successfully processed';
 			}
+
+			if (statusCode === 202 || statusCode === 204) {
+				resultFilename = 'circle-exclamation-solid.svg';
+				resultAlt = 'Warning';
+			}
+
+			if (statusCode === 202) {
+				resultText = 'The request has been partially processed.';
+			}
+
+			if (statusCode === 204) {
+				resultText = 'The request is empty.';
+			}
+
+			if (statusCode === 400) {
+				resultFilename = 'circle-xmark-solid.svg';
+				resultAlt = 'Error';
+				resultText = 'The request has failed.';
+			}
+
+			if (statusCode >= 500) {
+				resultFilename = 'circle-xmark-solid.svg';
+				resultAlt = 'Error';
+				resultText = response.json();
+				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
+			}
+
+			handleOpenModal(resultFilename, resultAlt, resultText);
 		} catch (error) {}
 	}
 
@@ -103,8 +145,16 @@ function MessageEditForm(props) {
 		<>
 			<Modal
 				isOpen={isModalOpen}
-				header={'Result'}
-				body={'The request has been sucessfully processed.'}
+				header={
+					<Icon
+						filename={resultFilename}
+						alt={resultAlt}
+						w={30}
+						h={30}
+						label={'Result'}
+					/>
+				}
+				body={resultText}
 				footer={<Button click={handleCloseModal} label={'OK'} />}
 			/>
 			<div className="container">
