@@ -34,13 +34,13 @@ function MessageItem(props) {
 								newTab={true}
 							/>
 							<MessageItemOptions
-								link={'/edit-message/'}
+								link={'/message-detail/'}
 								data={{
 									...message,
 									urlPost: message.postUrl.post,
 									urlStory: message.postUrl.story,
 								}}
-								label="Edit"
+								label="Details"
 								newTab={false}
 							/>
 						</div>
