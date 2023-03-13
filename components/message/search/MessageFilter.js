@@ -100,7 +100,7 @@ function MessageFilter(props) {
 				selected={selections.notPostedMessages}
 			/>
 			<MessageFilterInput
-				method={customSearch}
+				method={changeHandler}
 				label="Custom Search"
 				selected={selections.customSearch}
 				value={searchText}

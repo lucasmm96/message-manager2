@@ -1,11 +1,9 @@
 import { useRouter } from 'next/router';
 
-import classes from './MessageItemOptions.module.css';
 import Button from '@/components/ui/Button';
 
 function MessageItemOptions(props) {
 	const link = props.link ? props.link : '';
-	const isAvailable = props.link ? '' : classes.disabled;
 	const data = props.data ? props.data : '';
 	const newTab = props.newTab;
 
@@ -25,9 +23,9 @@ function MessageItemOptions(props) {
 
 	return (
 		<Button
-			classes={`${isAvailable}`}
 			click={navigateToPage}
 			label={props.label}
+			disabled={!props.link ? true : false}
 		/>
 	);
 }
