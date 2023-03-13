@@ -55,29 +55,35 @@ function Form(props) {
 				</div>
 			))}
 			<div className={classes.formContainer}>
-				<button
-					className={classes.formContainerItem}
-					type="submit"
-					onClick={submitHandler}
-				>
-					Save
-				</button>
-				<button
-					className={classes.formContainerItem}
-					type="button"
-					id="cancel"
-					onClick={cancelHandler}
-				>
-					Cancel
-				</button>
-				<button
-					className={classes.formContainerItem}
-					type="button"
-					id="delete"
-					onClick={deleteHandler}
-				>
-					Delete
-				</button>
+				{props.saveButton && (
+					<button
+						className={classes.formContainerItem}
+						type="submit"
+						onClick={submitHandler}
+					>
+						Save
+					</button>
+				)}
+				{props.cancelButton && (
+					<button
+						className={classes.formContainerItem}
+						type="button"
+						id="cancel"
+						onClick={cancelHandler}
+					>
+						Cancel
+					</button>
+				)}
+				{props.deleteButton && (
+					<button
+						className={classes.formContainerItem}
+						type="button"
+						id="delete"
+						onClick={deleteHandler}
+					>
+						Delete
+					</button>
+				)}
 			</div>
 		</form>
 	);
