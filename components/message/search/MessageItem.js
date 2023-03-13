@@ -5,9 +5,33 @@ import MessageItemBody from './MessageItemBody';
 import MessageItemOptions from './MessageItemOptions';
 
 function MessageItem(props) {
+	const messages = props.messages.map((message) => {
+		let currentMessage = {
+			_id: message._id,
+			message: message.message,
+			author: message.author,
+			addedAt: message.addedAt,
+			postedAt: message.postedAt,
+		};
+
+		if (!message.postUrl) {
+			return {
+				...currentMessage,
+				urlPost: '',
+				urlStory: '',
+			};
+		}
+
+		return {
+			...currentMessage,
+			urlPost: message.postUrl.post ? message.postUrl.post : '',
+			urlStory: message.postUrl.story ? message.postUrl.story : '',
+		};
+	});
+
 	return (
 		<div className="container">
-			{props.messages.map((message) => (
+			{messages.map((message) => (
 				<Card
 					key={message._id}
 					header={message.postedAt}
@@ -22,24 +46,20 @@ function MessageItem(props) {
 					footer={
 						<div className={classes.itemContainer}>
 							<MessageItemOptions
-								link={message.postUrl.post ? message.postUrl.post : ''}
+								link={message.urlPost}
 								data=""
 								label="Post"
 								newTab={true}
 							/>
 							<MessageItemOptions
-								link={message.postUrl.story ? message.postUrl.story : ''}
+								link={message.urlStory}
 								data=""
 								label="Story"
 								newTab={true}
 							/>
 							<MessageItemOptions
 								link={'/message-detail/'}
-								data={{
-									...message,
-									urlPost: message.postUrl.post,
-									urlStory: message.postUrl.story,
-								}}
+								data={{ ...message }}
 								label="Details"
 								newTab={false}
 							/>
