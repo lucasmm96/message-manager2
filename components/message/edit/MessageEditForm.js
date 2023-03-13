@@ -226,6 +226,9 @@ function MessageEditForm(props) {
 				<Form
 					fields={fields}
 					data={structuredData}
+					saveButton={true}
+					cancelButton={true}
+					deleteButton={true}
 					onSubmitHandler={submitHandler}
 					onCancelHandler={cancelHandler}
 					onDeleteHandler={deleteHandler}
