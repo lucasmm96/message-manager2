@@ -5,6 +5,7 @@ import Form from '@/components/ui/Form';
 import Modal from '@/components/ui/Modal';
 import Icon from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
+import ResponseBody from './ResponseBody';
 
 function MessageAddForm() {
 	const router = useRouter();
@@ -12,12 +13,19 @@ function MessageAddForm() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [resultFilename, setResultFilename] = useState('');
 	const [resultAlt, setResultAlt] = useState('');
-	const [resultText, setResultText] = useState('');
+	const [responseBody, setResponseBody] = useState('');
+	const [responseStatus, setResponseStatus] = useState('');
 
-	function handleOpenModal(resultFilename, resultAlt, resultText) {
+	function handleOpenModal(
+		resultFilename,
+		resultAlt,
+		responseBody,
+		responseStatus
+	) {
 		setResultFilename(resultFilename);
 		setResultAlt(resultAlt);
-		setResultText(resultText);
+		setResponseBody(responseBody);
+		setResponseStatus(responseStatus);
 		setIsModalOpen(true);
 	}
 
@@ -82,49 +90,34 @@ function MessageAddForm() {
 				body: JSON.stringify(bodyData),
 			});
 
-			const statusCode = response.status;
+			const responseData = await response.json();
+			const responseStatus = response.status;
+
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = 'Something went wrong';
 
-			if (statusCode === 200) {
+			if (responseStatus === 200) {
 				resultFilename = 'circle-check-solid.svg';
 				resultAlt = 'Sucess';
-				resultText = 'The request has been successfully processed';
 			}
 
-			if (statusCode === 202 || statusCode === 204) {
+			if (responseStatus === 202 || responseStatus === 204) {
 				resultFilename = 'circle-exclamation-solid.svg';
 				resultAlt = 'Warning';
 			}
 
-			if (statusCode === 202) {
-				resultText = 'The request has been partially processed.';
-			}
-
-			if (statusCode === 204) {
-				resultText = 'The request is empty.';
-			}
-
-			if (statusCode === 400) {
+			if (responseStatus === 400) {
 				resultFilename = 'circle-xmark-solid.svg';
 				resultAlt = 'Error';
-				resultText = 'The request has failed.';
 			}
 
-			if (statusCode >= 500) {
-				resultFilename = 'circle-xmark-solid.svg';
-				resultAlt = 'Error';
-				resultText = response.json();
-				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
-			}
-
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			handleOpenModal(resultFilename, resultAlt, responseData, responseStatus);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = `Something went wrong. Error: (${error}).`;
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			let responseData = `Something went wrong. Error: (${error}).`;
+			let responseStatus = '500';
+			handleOpenModal(resultFilename, resultAlt, responseData, responseStatus);
 		}
 	}
 
@@ -145,7 +138,7 @@ function MessageAddForm() {
 						label={'Result'}
 					/>
 				}
-				body={resultText}
+				body={<ResponseBody response={responseBody} />}
 				footer={<Button click={handleCloseModal} label={'OK'} />}
 			/>
 			<div className="container">
