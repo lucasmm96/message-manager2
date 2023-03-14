@@ -13,17 +13,22 @@ function MessageAddForm() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [resultFilename, setResultFilename] = useState('');
 	const [resultAlt, setResultAlt] = useState('');
-	const [responseBody, setResponseBody] = useState('');
+	const [responseData, setResponseData] = useState('');
+	const [requestStatus, setRequestStatus] = useState(false);
 
-	function handleOpenModal(resultFilename, resultAlt, responseBody) {
-		setResultFilename(resultFilename);
-		setResultAlt(resultAlt);
-		setResponseBody(responseBody);
+	function handleOpenModal(resFilename, resAlt, resData, resStatus) {
+		setResultFilename(resFilename);
+		setResultAlt(resAlt);
+		setResponseData(resData);
+		setRequestStatus(resStatus);
 		setIsModalOpen(true);
 	}
 
 	function handleCloseModal() {
 		setIsModalOpen(false);
+		if (requestStatus) {
+			router.push('/');
+		}
 	}
 
 	const fields = [
@@ -83,32 +88,32 @@ function MessageAddForm() {
 			});
 
 			const responseData = await response.json();
-			const responseStatus = response.status;
+			const responseStatusCode = response.status;
 
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
 
-			if (responseStatus === 200) {
+			if (responseStatusCode === 200) {
 				resultFilename = 'circle-check-solid.svg';
 				resultAlt = 'Sucess';
 			}
 
-			if (responseStatus === 202 || responseStatus === 204) {
+			if (responseStatusCode === 202 || responseStatusCode === 204) {
 				resultFilename = 'circle-exclamation-solid.svg';
 				resultAlt = 'Warning';
 			}
 
-			if (responseStatus === 400) {
+			if (responseStatusCode === 400) {
 				resultFilename = 'circle-xmark-solid.svg';
 				resultAlt = 'Error';
 			}
 
-			handleOpenModal(resultFilename, resultAlt, responseData);
+			handleOpenModal(resultFilename, resultAlt, responseData, response.ok);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
 			let responseData = `Something went wrong. Error: (${error}).`;
-			handleOpenModal(resultFilename, resultAlt, responseData);
+			handleOpenModal(resultFilename, resultAlt, responseData, false);
 		}
 	}
 
@@ -129,7 +134,7 @@ function MessageAddForm() {
 						label={'Result'}
 					/>
 				}
-				body={<ResponseBody response={responseBody} />}
+				body={<ResponseBody response={responseData} />}
 				footer={<Button click={handleCloseModal} label={'OK'} />}
 			/>
 			<div className="container">
