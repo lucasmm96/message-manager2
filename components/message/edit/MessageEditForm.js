@@ -194,7 +194,6 @@ function MessageEditForm(props) {
 				resultText = response.json();
 				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
 			}
-
 			handleOpenModal(resultFilename, resultAlt, resultText);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
@@ -202,8 +201,6 @@ function MessageEditForm(props) {
 			let resultText = `Something went wrong. Error: (${error}).`;
 			handleOpenModal(resultFilename, resultAlt, resultText);
 		}
-
-		// router.push('/');
 	}
 
 	return (
@@ -219,7 +216,7 @@ function MessageEditForm(props) {
 						label={'Result'}
 					/>
 				}
-				body={resultText}
+				body={<h4>{resultText}</h4>}
 				footer={<Button click={handleCloseModal} label={'OK'} />}
 			/>
 			<div className="container">
