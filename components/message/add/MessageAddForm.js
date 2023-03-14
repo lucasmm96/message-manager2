@@ -14,24 +14,16 @@ function MessageAddForm() {
 	const [resultFilename, setResultFilename] = useState('');
 	const [resultAlt, setResultAlt] = useState('');
 	const [responseBody, setResponseBody] = useState('');
-	const [responseStatus, setResponseStatus] = useState('');
 
-	function handleOpenModal(
-		resultFilename,
-		resultAlt,
-		responseBody,
-		responseStatus
-	) {
+	function handleOpenModal(resultFilename, resultAlt, responseBody) {
 		setResultFilename(resultFilename);
 		setResultAlt(resultAlt);
 		setResponseBody(responseBody);
-		setResponseStatus(responseStatus);
 		setIsModalOpen(true);
 	}
 
 	function handleCloseModal() {
 		setIsModalOpen(false);
-		router.push('/');
 	}
 
 	const fields = [
@@ -111,13 +103,12 @@ function MessageAddForm() {
 				resultAlt = 'Error';
 			}
 
-			handleOpenModal(resultFilename, resultAlt, responseData, responseStatus);
+			handleOpenModal(resultFilename, resultAlt, responseData);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
 			let responseData = `Something went wrong. Error: (${error}).`;
-			let responseStatus = '500';
-			handleOpenModal(resultFilename, resultAlt, responseData, responseStatus);
+			handleOpenModal(resultFilename, resultAlt, responseData);
 		}
 	}
 
