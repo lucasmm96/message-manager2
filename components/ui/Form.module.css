@@ -23,46 +23,22 @@
 
 .formContainerItem {
 	margin: 0 20px;
-	width: 30%;
+	width: 24%;
 	font-size: 17px;
-}
-
-@media screen and (max-width: 1920px) {
-	.formContainerItem {
-		width: 30%;
-		margin-top: 20px;
-	}
-}
-
-@media screen and (max-width: 1440px) {
-	.formContainerItem {
-		width: 90%;
-		margin-top: 20px;
-	}
-}
-
-@media screen and (max-width: 1200px) {
-	.formContainerItem {
-		width: 90%;
-		margin-top: 20px;
-	}
 }
 
 @media screen and (max-width: 992px) {
 	.formContainerItem {
-		width: 90%;
-		margin-top: 20px;
+		width: 24%;
 	}
 }
+
 @media screen and (max-width: 768px) {
 	.formContainerItem {
-		width: 90%;
-		margin-top: 20px;
+		width: 100%;
 	}
-}
-@media screen and (max-width: 480px) {
-	.formContainerItem {
-		width: 90%;
+
+	.formContainerItem:not(:first-child) {
 		margin-top: 20px;
 	}
 }
