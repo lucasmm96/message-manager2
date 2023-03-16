@@ -1,4 +1,4 @@
-import classes from './Button.module.css';
+import classes from '@/components/ui/Button.module.css';
 
 function Button(props) {
 	const button = classes.button;

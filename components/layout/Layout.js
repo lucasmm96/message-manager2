@@ -1,6 +1,7 @@
-import Header from './Header';
-import Footer from './Footer';
-import classes from './Layout.module.css';
+import classes from '@/components/layout/Layout.module.css';
+
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 function Layout(props) {
 	return (

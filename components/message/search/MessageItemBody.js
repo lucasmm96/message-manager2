@@ -1,4 +1,4 @@
-import classes from './MessageItemBody.module.css';
+import classes from '@/components/message/search/MessageItemBody.module.css';
 
 function MessageItemBody(props) {
 	return (

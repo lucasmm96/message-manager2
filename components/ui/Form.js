@@ -1,4 +1,4 @@
-import classes from './Form.module.css';
+import classes from '@/components/ui/Form.module.css';
 
 function Form(props) {
 	return (

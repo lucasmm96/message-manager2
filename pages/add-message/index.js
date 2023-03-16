@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import MessageAdd from '@/components/message/MessageAdd';
 
 function AddMessage() {

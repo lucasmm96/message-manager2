@@ -1,6 +1,6 @@
-import classes from './MessageFilterInput.module.css';
+import classes from '@/components/message/search/MessageFilterInput.module.css';
 
-import MessageFilterButton from './MessageFilterButton';
+import MessageFilterButton from '@/components/message/search/MessageFilterButton';
 
 function MessageFilterInput(props) {
 	const isSelected = props.selected;

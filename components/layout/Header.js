@@ -1,7 +1,8 @@
-import classes from './Header.module.css';
 import Link from 'next/link';
 
-import IconLink from '../ui/IconLink';
+import classes from '@/components/layout/Header.module.css';
+
+import IconLink from '@/components/ui/IconLink';
 
 function MainNavigation() {
 	return (

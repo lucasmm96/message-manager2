@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import Icon from './Icon';
-import classes from './IconLink.module.css';
+
+import classes from '@/components/ui/IconLink.module.css';
+
+import Icon from '@/components/ui/Icon';
 
 function IconLink(props) {
 	return (

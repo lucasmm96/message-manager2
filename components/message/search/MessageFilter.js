@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import classes from './MessageFilter.module.css';
+import classes from '@/components/message/search/MessageFilter.module.css';
 
-import MessageFilterButton from './MessageFilterButton';
-import MessageFilterInput from './MessageFilterInput';
+import MessageFilterButton from '@/components/message/search/MessageFilterButton';
+import MessageFilterInput from '@/components/message/search/MessageFilterInput';
 
 function MessageFilter(props) {
 	const messages = props.data;

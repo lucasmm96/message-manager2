@@ -1,6 +1,6 @@
-import IconLink from './IconLink';
+import classes from '@/components/ui/FormInput.module.css';
 
-import classes from './FormInput.module.css';
+import IconLink from '@/components/ui/IconLink';
 
 function FormInput(props) {
 	function onChangeHandler(event) {

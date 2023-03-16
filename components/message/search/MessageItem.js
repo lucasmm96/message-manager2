@@ -1,8 +1,8 @@
-import classes from './MessageItem.module.css';
+import classes from '@/components/message/search/MessageItem.module.css';
 
 import Card from '@/components/ui/Card';
-import MessageItemBody from './MessageItemBody';
-import MessageItemOptions from './MessageItemOptions';
+import MessageItemBody from '@/components/message/search/MessageItemBody';
+import MessageItemOptions from '@/components/message/search/MessageItemOptions';
 
 function MessageItem(props) {
 	const messages = props.messages.map((message) => {

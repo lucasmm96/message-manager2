@@ -1,4 +1,4 @@
-import classes from './Modal.module.css';
+import classes from '@/components/ui/Modal.module.css';
 
 function Modal(props) {
 	if (!props.isOpen) {

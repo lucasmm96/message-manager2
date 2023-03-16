@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Modal from '@/components/ui/Modal';
-import ResponseBody from '../form/ResponseBody';
+import ResponseBody from '@/components/message/form/ResponseBody';
 import Icon from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
-import MessageForm from '../form/MessageForm';
+import MessageForm from '@/components/message/form/MessageForm';
 
 function MessageAddForm() {
 	const router = useRouter();

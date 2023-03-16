@@ -1,6 +1,6 @@
-import classes from './Icon.module.css';
-
 import Image from 'next/image';
+
+import classes from '@/components/ui/Icon.module.css';
 
 function Icon(props) {
 	return (

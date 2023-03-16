@@ -1,8 +1,8 @@
-import Form from '../../ui/Form';
-import FormInput from '../../ui/FormInput';
-import Button from '../../ui/Button';
-
 import { useState, useEffect } from 'react';
+
+import Form from '@/components/ui/Form';
+import FormInput from '@/components/ui/FormInput';
+import Button from '@/components/ui/Button';
 
 function MessageForm(props) {
 	const [formData, setFormData] = useState({ ...props.data });
