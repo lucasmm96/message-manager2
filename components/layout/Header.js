@@ -5,6 +5,10 @@ import classes from '@/components/layout/Header.module.css';
 import IconLink from '@/components/ui/IconLink';
 
 function MainNavigation() {
+	// const userStatus = props.userStatus;
+	// const userStatus = 'Login';
+	const userStatus = 'Logout';
+
 	return (
 		<header className={classes.header}>
 			<nav>
@@ -16,6 +20,17 @@ function MainNavigation() {
 							filename="logo.svg"
 							alt="Logo"
 							text="Message Manager"
+							w={20}
+							h={20}
+						/>
+					</li>
+					<li className={classes.right}>
+						<IconLink
+							href={'/auth'}
+							newTab={false}
+							filename={`circle-user-solid(${userStatus}).svg`}
+							alt={userStatus}
+							text={userStatus}
 							w={20}
 							h={20}
 						/>
