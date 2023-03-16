@@ -52,17 +52,7 @@ body {
 	}
 }
 
-@media screen and (max-width: 992px) {
-	.containerItem {
-		width: 47%;
-	}
-}
 @media screen and (max-width: 768px) {
-	.containerItem {
-		width: 97%;
-	}
-}
-@media screen and (max-width: 480px) {
 	.containerItem {
 		width: 97%;
 	}
