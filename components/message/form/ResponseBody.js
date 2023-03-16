@@ -1,4 +1,4 @@
-import classes from '@/components/message/add/ResponseBody.module.css';
+import classes from '@/components/message/form/ResponseBody.module.css';
 
 function ResponseBody(props) {
 	const response = props.response;
@@ -7,7 +7,7 @@ function ResponseBody(props) {
 		<>
 			<div className={classes.bodyContainer}>
 				<div className={classes.responseResults}>{response.message}</div>
-				{response.result.failed.map((failedItem) => {
+				{props.responseInfo && response.result.failed.map((failedItem) => {
 					return (
 						<>
 							<h4>New message:</h4>
