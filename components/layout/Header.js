@@ -1,10 +1,13 @@
 import Link from 'next/link';
+import { useMedia } from 'react-use';
 
 import classes from '@/components/layout/Header.module.css';
 
 import IconLink from '@/components/ui/IconLink';
 
 function MainNavigation() {
+	const smallScreen = useMedia('(max-width: 768px)');
+
 	return (
 		<header className={classes.header}>
 			<nav>
@@ -30,12 +33,28 @@ function MainNavigation() {
 							h={20}
 						/>
 					</li>
-					<li className={classes.right}>
-						<Link href="/add-message">Add New Message</Link>
-					</li>
-					<li className={classes.right}>
-						<Link href="/">All Messages</Link>
-					</li>
+					{smallScreen && (
+						<li className={classes.right}>
+							<IconLink
+								href={'/auth'}
+								newTab={false}
+								filename="bars-solid.svg"
+								alt="Options"
+								w={20}
+								h={20}
+							/>
+						</li>
+					)}
+					{!smallScreen && (
+						<>
+							<li className={classes.right}>
+								<Link href="/add-message">Add New Message</Link>
+							</li>
+							<li className={classes.right}>
+								<Link href="/">All Messages</Link>
+							</li>
+						</>
+					)}
 				</ul>
 			</nav>
 		</header>
