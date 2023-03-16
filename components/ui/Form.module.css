@@ -17,59 +17,27 @@
 	justify-content: center;
 	align-items: stretch;
 	max-width: 100%;
-	padding: 5% 10% 2% 10%;
+	padding: 20px;
 	box-sizing: border-box;
 }
 
-.formContainerItem {
-	margin: 0 20px;
-	width: 24%;
+.formContainer button {
+	width: 30%;
 	font-size: 17px;
 }
 
 @media screen and (max-width: 992px) {
-	.formContainerItem {
-		width: 24%;
+	.formContainer button {
+		width: 30%;
 	}
 }
 
 @media screen and (max-width: 768px) {
-	.formContainerItem {
+	.formContainer button {
 		width: 100%;
 	}
 
-	.formContainerItem:not(:first-child) {
+	.formContainer button:not(:first-child) {
 		margin-top: 20px;
 	}
-}
-
-.form label {
-	font-weight: bold;
-	margin-bottom: 0.5rem;
-	margin-right: 10px;
-}
-
-.form input[type='text'],
-.form input[type='date'],
-.form input[type='url'] {
-	padding: 0.5rem;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-}
-
-.form button[type='submit'],
-.form button[type='button'] {
-	padding: 0.5rem 1rem;
-	background-color: #008cba;
-	color: #fff;
-	border: none;
-	border-radius: 5px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.1s;
-}
-
-.form button[type='submit']:hover,
-.form button[type='button']:hover {
-	background-color: #005c8a;
 }
