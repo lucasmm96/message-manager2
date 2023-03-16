@@ -1,10 +1,11 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
-import Form from '@/components/ui/Form';
 import Modal from '@/components/ui/Modal';
-import Button from '@/components/ui/Button';
+import ResponseBody from '../form/ResponseBody';
 import Icon from '@/components/ui/Icon';
+import Button from '@/components/ui/Button';
+import MessageForm from '../form/MessageForm';
 
 function MessageEditForm(props) {
 	const router = useRouter();
@@ -12,133 +13,95 @@ function MessageEditForm(props) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [resultFilename, setResultFilename] = useState('');
 	const [resultAlt, setResultAlt] = useState('');
-	const [resultText, setResultText] = useState('');
+	const [responseData, setResponseData] = useState('');
+	const [requestStatus, setRequestStatus] = useState(false);
 
-	function handleOpenModal(resultFilename, resultAlt, resultText) {
-		setResultFilename(resultFilename);
-		setResultAlt(resultAlt);
-		setResultText(resultText);
+	const [formData, setFormData] = useState({
+		_id: { value: props.data._id, required: false, valid: true, onBlur: true },
+		message: {
+			value: props.data.message,
+			required: true,
+			valid: true,
+			onBlur: true,
+		},
+		author: {
+			value: props.data.author,
+			required: true,
+			valid: true,
+			onBlur: true,
+		},
+		postedAt: {
+			value: props.data.postedAt,
+			required: false,
+			valid: true,
+			onBlur: false,
+		},
+		urlPost: {
+			value: props.data.urlPost,
+			required: false,
+			valid: true,
+			onBlur: false,
+		},
+		urlStory: {
+			value: props.data.urlStory,
+			required: false,
+			valid: true,
+			onBlur: false,
+		},
+	});
+
+	function handleOpenModal(resFilename, resAlt, resData, resStatus) {
+		setResultFilename(resFilename);
+		setResultAlt(resAlt);
+		setResponseData(resData);
+		setRequestStatus(resStatus);
 		setIsModalOpen(true);
 	}
 
 	function handleCloseModal() {
 		setIsModalOpen(false);
-		router.push('/');
+		if (requestStatus) {
+			router.push('/');
+		}
 	}
 
-	const fields = [
-		{
-			name: 'message',
-			label: 'Message',
-			type: 'text',
-			required: true,
-			data: props.data.message,
-		},
-		{
-			name: 'author',
-			label: 'Author',
-			type: 'text',
-			required: true,
-			data: props.data.author,
-		},
-		{
-			name: 'postedAt',
-			label: 'Post Date',
-			type: 'date',
-			required: false,
-			data: props.data.postedAt,
-		},
-		{
-			name: 'urlPost',
-			label: 'Post Link',
-			type: 'url',
-			required: false,
-			data: props.data.urlPost,
-		},
-		{
-			name: 'urlStory',
-			label: 'Story Link',
-			type: 'url',
-			required: false,
-			data: props.data.urlStory,
-		},
-	];
-
-	const structuredData = {
-		_id: props.data._id,
-		message: props.data.message,
-		author: props.data.author,
-		postedAt: props.data.postedAt,
-		urlPost: props.data.urlPost,
-		urlStory: props.data.urlStory,
-	};
-
 	async function submitHandler(data) {
-		const bodyData = [
-			{
-				_id: data._id,
-				message: data.message,
-				author: data.author,
-				postedAt: data.postedAt,
-				postUrl: {
-					post: data.urlPost,
-					story: data.urlStory,
-				},
-			},
-		];
-
 		try {
 			const response = await fetch(`${process.env.API_URL}/message/update`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(bodyData),
+				body: JSON.stringify(data),
 			});
 
-			const statusCode = response.status;
+			const responseData = await response.json();
+			const responseStatusCode = response.status;
+
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = 'Something went wrong';
 
-			if (statusCode === 200) {
+			if (responseStatusCode === 200) {
 				resultFilename = 'circle-check-solid.svg';
 				resultAlt = 'Sucess';
-				resultText = 'The request has been successfully processed';
 			}
 
-			if (statusCode === 202 || statusCode === 204) {
+			if (responseStatusCode === 202 || responseStatusCode === 204) {
 				resultFilename = 'circle-exclamation-solid.svg';
 				resultAlt = 'Warning';
 			}
 
-			if (statusCode === 202) {
-				resultText = 'The request has been partially processed.';
-			}
-
-			if (statusCode === 204) {
-				resultText = 'The request is empty.';
-			}
-
-			if (statusCode === 400) {
+			if (responseStatusCode === 400) {
 				resultFilename = 'circle-xmark-solid.svg';
 				resultAlt = 'Error';
-				resultText = 'The request has failed.';
 			}
 
-			if (statusCode >= 500) {
-				resultFilename = 'circle-xmark-solid.svg';
-				resultAlt = 'Error';
-				resultText = response.json();
-				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
-			}
-
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			handleOpenModal(resultFilename, resultAlt, responseData, response.ok);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = `Something went wrong. Error: (${error}).`;
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			let responseData = `Something went wrong. Error: (${error}).`;
+			handleOpenModal(resultFilename, resultAlt, responseData, false);
 		}
 	}
 
@@ -146,61 +109,52 @@ function MessageEditForm(props) {
 		router.push('/');
 	}
 
-	async function deleteHandler(data) {
-		const bodyData = [{ _id: data._id }];
+	function changeHandler(formData) {
+		setFormData(formData);
+	}
 
+	async function deleteHandler(data) {
 		try {
 			const response = await fetch(`${process.env.API_URL}/message/delete`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(bodyData),
+				body: JSON.stringify(data),
 			});
 
-			const statusCode = response.status;
+			const responseData = await response.json();
+			const responseStatusCode = response.status;
+
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = 'Something went wrong';
 
-			if (statusCode === 200) {
+			if (responseStatusCode === 200) {
 				resultFilename = 'circle-check-solid.svg';
 				resultAlt = 'Sucess';
-				resultText = 'The request has been successfully processed';
 			}
 
-			if (statusCode === 202 || statusCode === 204) {
+			if (responseStatusCode === 202 || responseStatusCode === 204) {
 				resultFilename = 'circle-exclamation-solid.svg';
 				resultAlt = 'Warning';
 			}
 
-			if (statusCode === 202) {
-				resultText = 'The request has been partially processed.';
-			}
-
-			if (statusCode === 204) {
-				resultText = 'The request is empty.';
-			}
-
-			if (statusCode === 400) {
+			if (responseStatusCode === 400) {
 				resultFilename = 'circle-xmark-solid.svg';
 				resultAlt = 'Error';
-				resultText = 'The request has failed.';
 			}
 
-			if (statusCode >= 500) {
-				resultFilename = 'circle-xmark-solid.svg';
-				resultAlt = 'Error';
-				resultText = response.json();
-				resultText = `Something went wrong. Error: (${resultText.error.message}).`;
-			}
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			handleOpenModal(resultFilename, resultAlt, responseData, response.ok);
 		} catch (error) {
 			let resultFilename = 'circle-xmark-solid.svg';
 			let resultAlt = 'Error';
-			let resultText = `Something went wrong. Error: (${error}).`;
-			handleOpenModal(resultFilename, resultAlt, resultText);
+			let responseData = `Something went wrong. Error: (${error}).`;
+			handleOpenModal(resultFilename, resultAlt, responseData, false);
 		}
+	}
+
+	function blurHandler(formData) {
+		setFormData(formData);
 	}
 
 	return (
@@ -216,21 +170,17 @@ function MessageEditForm(props) {
 						label={'Result'}
 					/>
 				}
-				body={<h4>{resultText}</h4>}
+				body={<ResponseBody response={responseData} />}
 				footer={<Button click={handleCloseModal} label={'OK'} />}
 			/>
-			<div className="container">
-				<Form
-					fields={fields}
-					data={structuredData}
-					saveButton={true}
-					cancelButton={true}
-					deleteButton={true}
-					onSubmitHandler={submitHandler}
-					onCancelHandler={cancelHandler}
-					onDeleteHandler={deleteHandler}
-				/>
-			</div>
+			<MessageForm
+				data={formData}
+				onChangeHandler={changeHandler}
+				onBlurHandler={blurHandler}
+				onSubmitHandler={submitHandler}
+				onCancelHandler={cancelHandler}
+				onDeleteHandler={deleteHandler}
+			/>
 		</>
 	);
 }
