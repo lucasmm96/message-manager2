@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import ModalResults from './ModalResults';
+import ModalConfirmation from './ModalConfirmation';
 import Form from '@/components/ui/Form';
 import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
@@ -80,97 +82,124 @@ function MessageForm(props) {
 		props.onCancelHandler();
 	}
 
+	function deleteHandlerConfirmation(event) {
+		event.preventDefault();
+		props.onDeleteHandlerConfirmation();
+	}
+
 	function onDeleteHandler(event) {
 		event.preventDefault();
 		props.onDeleteHandler([{ _id: formData._id.value }]);
 	}
 
+	function closeHandler() {
+		props.onCloseHandler();
+	}
+
 	return (
-		<div className="container">
-			<Form
-				input={
-					<>
-						<FormInput
-							name="message"
-							label="Message"
-							type="text"
-							required={formData.message.required}
-							value={formData.message.value}
-							valid={formData.message.valid}
-							blur={formData.message.onBlur}
-							onChangeHandler={onChangeHandler}
-							onBlurHandler={onBlurHandler}
-						/>
-						<FormInput
-							name="author"
-							label="Author"
-							type="text"
-							required={formData.author.required}
-							value={formData.author.value}
-							valid={formData.author.valid}
-							blur={formData.author.onBlur}
-							onChangeHandler={onChangeHandler}
-							onBlurHandler={onBlurHandler}
-						/>
-						<FormInput
-							name="postedAt"
-							label="Post Date"
-							type="date"
-							required={formData.postedAt.required}
-							value={formData.postedAt.value}
-							valid={formData.postedAt.valid}
-							blur={formData.message.onBlur}
-							onChangeHandler={onChangeHandler}
-							onBlurHandler={onBlurHandler}
-						/>
-						<FormInput
-							name="urlPost"
-							label="Post Link"
-							type="url"
-							required={formData.urlPost.required}
-							value={formData.urlPost.value}
-							valid={formData.urlPost.valid}
-							blur={formData.message.onBlur}
-							onChangeHandler={onChangeHandler}
-							onBlurHandler={onBlurHandler}
-						/>
-						<FormInput
-							name="urlStory"
-							label="Story Link"
-							type="url"
-							required={formData.urlStory.required}
-							value={formData.urlStory.value}
-							valid={formData.urlStory.valid}
-							blur={formData.message.onBlur}
-							onChangeHandler={onChangeHandler}
-							onBlurHandler={onBlurHandler}
-						/>
-					</>
-				}
-				actions={
-					<>
-						<Button
-							label="Save"
-							classes="containerItem"
-							click={onSubmitHandler}
-							disabled={!validForm}
-						/>
-						<Button
-							label="Cancel"
-							classes="containerItem"
-							click={onCancelHandler}
-						/>
-						{props.onDeleteHandler && (
-							<Button
-								label="Delete"
-								classes="containerItem"
-								click={onDeleteHandler}
+		<>
+			{props.modalType === 'RESULTS' && (
+				<ModalResults
+					isModalOpen={props.isModalOpen}
+					responseStatus={props.responseStatus}
+					responseData={props.responseData}
+					onCloseHandler={closeHandler}
+				/>
+			)}
+			{props.modalType === 'CONFIRMATION' && (
+				<ModalConfirmation
+					isModalOpen={props.isModalOpen}
+					onDeleteHandlerConfirmation={deleteHandlerConfirmation}
+					onDeleteHandler={onDeleteHandler}
+					onCloseHandler={closeHandler}
+				/>
+			)}
+			<div className="container">
+				<Form
+					input={
+						<>
+							<FormInput
+								name="message"
+								label="Message"
+								type="text"
+								required={formData.message.required}
+								value={formData.message.value}
+								valid={formData.message.valid}
+								blur={formData.message.onBlur}
+								onChangeHandler={onChangeHandler}
+								onBlurHandler={onBlurHandler}
 							/>
-						)}
-					</>
-				}
-			/>
-		</div>
+							<FormInput
+								name="author"
+								label="Author"
+								type="text"
+								required={formData.author.required}
+								value={formData.author.value}
+								valid={formData.author.valid}
+								blur={formData.author.onBlur}
+								onChangeHandler={onChangeHandler}
+								onBlurHandler={onBlurHandler}
+							/>
+							<FormInput
+								name="postedAt"
+								label="Post Date"
+								type="date"
+								required={formData.postedAt.required}
+								value={formData.postedAt.value}
+								valid={formData.postedAt.valid}
+								blur={formData.message.onBlur}
+								onChangeHandler={onChangeHandler}
+								onBlurHandler={onBlurHandler}
+							/>
+							<FormInput
+								name="urlPost"
+								label="Post Link"
+								type="url"
+								required={formData.urlPost.required}
+								value={formData.urlPost.value}
+								valid={formData.urlPost.valid}
+								blur={formData.message.onBlur}
+								onChangeHandler={onChangeHandler}
+								onBlurHandler={onBlurHandler}
+							/>
+							<FormInput
+								name="urlStory"
+								label="Story Link"
+								type="url"
+								required={formData.urlStory.required}
+								value={formData.urlStory.value}
+								valid={formData.urlStory.valid}
+								blur={formData.message.onBlur}
+								onChangeHandler={onChangeHandler}
+								onBlurHandler={onBlurHandler}
+							/>
+						</>
+					}
+					actions={
+						<>
+							<Button
+								label="Save"
+								classes="containerItem"
+								click={onSubmitHandler}
+								disabled={!validForm}
+							/>
+							<Button
+								label="Cancel"
+								classes="containerItem"
+								click={onCancelHandler}
+							/>
+							{props.onDeleteHandler && (
+								<Button
+									label="Delete"
+									classes="containerItem"
+									click={deleteHandlerConfirmation}
+								/>
+							)}
+						</>
+					}
+				/>
+			</div>
+		</>
 	);
 }
 

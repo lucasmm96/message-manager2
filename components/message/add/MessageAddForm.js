@@ -1,20 +1,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import Modal from '@/components/ui/Modal';
-import ResponseBody from '@/components/message/form/ResponseBody';
-import Icon from '@/components/ui/Icon';
-import Button from '@/components/ui/Button';
 import MessageForm from '@/components/message/form/MessageForm';
+import MessageAddResponse from './MessageAddResponse';
 
 function MessageAddForm() {
 	const router = useRouter();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [resultFilename, setResultFilename] = useState('');
-	const [resultAlt, setResultAlt] = useState('');
-	const [responseData, setResponseData] = useState('');
-	const [requestStatus, setRequestStatus] = useState(false);
+	const [responseStatus, setResponseStatus] = useState('ERROR');
+	const [responseData, setResponseData] = useState({});
 
 	const [formData, setFormData] = useState({
 		message: { value: '', required: true, valid: false, onBlur: false },
@@ -24,19 +19,12 @@ function MessageAddForm() {
 		urlStory: { value: '', required: false, valid: true, onBlur: false },
 	});
 
-	function handleOpenModal(resFilename, resAlt, resData, resStatus) {
-		setResultFilename(resFilename);
-		setResultAlt(resAlt);
-		setResponseData(resData);
-		setRequestStatus(resStatus);
-		setIsModalOpen(true);
+	function blurHandler(formData) {
+		setFormData(formData);
 	}
 
-	function handleCloseModal() {
-		setIsModalOpen(false);
-		if (requestStatus) {
-			router.push('/');
-		}
+	function changeHandler(formData) {
+		setFormData(formData);
 	}
 
 	async function submitHandler(data) {
@@ -49,72 +37,56 @@ function MessageAddForm() {
 				body: JSON.stringify(data),
 			});
 
-			const responseData = await response.json();
+			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
-			let resultFilename = 'circle-xmark-solid.svg';
-			let resultAlt = 'Error';
+			setResponseStatus('ERROR');
+			setResponseData('Something went wrong.');
+
+			if (response.ok) {
+				setResponseData(<MessageAddResponse response={responseJSON} />);
+			}
 
 			if (responseStatusCode === 200) {
-				resultFilename = 'circle-check-solid.svg';
-				resultAlt = 'Sucess';
+				setResponseStatus('SUCESS');
 			}
 
 			if (responseStatusCode === 202 || responseStatusCode === 204) {
-				resultFilename = 'circle-exclamation-solid.svg';
-				resultAlt = 'Warning';
+				setResponseStatus('WARNING');
 			}
 
 			if (responseStatusCode === 400) {
-				resultFilename = 'circle-xmark-solid.svg';
-				resultAlt = 'Error';
+				setResponseStatus('ERROR');
 			}
-
-			handleOpenModal(resultFilename, resultAlt, responseData, response.ok);
 		} catch (error) {
-			let resultFilename = 'circle-xmark-solid.svg';
-			let resultAlt = 'Error';
-			let responseData = `Something went wrong. Error: (${error}).`;
-			handleOpenModal(resultFilename, resultAlt, responseData, false);
+			setResponseStatus('ERROR');
+			setResponseData(`Something went wrong. Error: (${error}).`);
 		}
+
+		setIsModalOpen(true);
 	}
 
 	function cancelHandler() {
 		router.push('/');
 	}
 
-	function changeHandler(formData) {
-		setFormData(formData);
-	}
-
-	function blurHandler(formData) {
-		setFormData(formData);
+	function closeHandler() {
+		setIsModalOpen(false);
 	}
 
 	return (
-		<>
-			<Modal
-				isOpen={isModalOpen}
-				header={
-					<Icon
-						filename={resultFilename}
-						alt={resultAlt}
-						w={30}
-						h={30}
-						label={'Result'}
-					/>
-				}
-				body={<ResponseBody response={responseData} responseInfo={true} />}
-				footer={<Button click={handleCloseModal} label={'OK'} />}
-			/>
-			<MessageForm
-				data={formData}
-				onChangeHandler={changeHandler}
-				onBlurHandler={blurHandler}
-				onSubmitHandler={submitHandler}
-				onCancelHandler={cancelHandler}
-			/>
-		</>
+		<MessageForm
+			data={formData}
+			onBlurHandler={blurHandler}
+			onChangeHandler={changeHandler}
+			onSubmitHandler={submitHandler}
+			onCancelHandler={cancelHandler}
+			onCloseHandler={closeHandler}
+			modalType="RESULTS"
+			isModalOpen={isModalOpen}
+			responseStatus={responseStatus}
+			responseData={responseData}
+		/>
 	);
 }
 
