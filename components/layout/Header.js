@@ -23,16 +23,6 @@ function MainNavigation() {
 							h={20}
 						/>
 					</li>
-					<li className={classes.right}>
-						<IconLink
-							href={'/auth'}
-							newTab={false}
-							filename="circle-user-solid.svg"
-							alt="Auth"
-							w={20}
-							h={20}
-						/>
-					</li>
 					{smallScreen && (
 						<li className={classes.right}>
 							<IconLink
@@ -47,6 +37,16 @@ function MainNavigation() {
 					)}
 					{!smallScreen && (
 						<>
+							<li className={classes.right}>
+								<IconLink
+									href={'/auth'}
+									newTab={false}
+									filename="circle-user-solid.svg"
+									alt="Auth"
+									w={20}
+									h={20}
+								/>
+							</li>
 							<li className={classes.right}>
 								<Link href="/add-message">Add New Message</Link>
 							</li>
