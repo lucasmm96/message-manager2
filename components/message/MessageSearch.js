@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Head from '@/components/layout/CustomHead';
 import MessageFilter from '@/components/message/search/messageFilter';
 import MessageItem from '@/components/message/search/MessageItem';
 
@@ -15,6 +16,7 @@ export default function MessageSearch(props) {
 
 	return (
 		<>
+			<Head title="Message Manager" />
 			<h1>Messages</h1>
 			<h3>Records: {messagesLength}</h3>
 			<MessageFilter data={props.messages} onApplyFilter={applyFilter} />

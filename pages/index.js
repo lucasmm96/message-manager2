@@ -1,13 +1,7 @@
-import Head from '@/components/layout/CustomHead';
 import MessageSearch from '@/components/message/MessageSearch';
 
 export default function Home(props) {
-	return (
-		<>
-			<Head title="Message Manager" />
-			<MessageSearch messages={props.messages} />
-		</>
-	);
+	return <MessageSearch messages={props.messages} />;
 }
 
 export async function getServerSideProps() {

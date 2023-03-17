@@ -1,8 +1,11 @@
 import MessageAddForm from '@/components/message/add/MessageAddForm';
 
-function MessageEdit(props) {
+import Head from '@/components/layout/CustomHead';
+
+function MessageEdit() {
 	return (
 		<>
+			<Head title="Add Message" />
 			<h1>Add Message</h1>
 			<MessageAddForm />
 		</>
