@@ -1,3 +1,4 @@
+import get from '@/utils/httpRequests/get';
 import MessageSearch from '@/components/message/MessageSearch';
 
 export default function Home(props) {
@@ -5,9 +6,7 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-	const response = await fetch(`${process.env.API_URL}/message/list`, {
-		method: 'GET',
-	});
+	const response = await get('/message/list');
 	const data = await response.json();
 
 	return {
