@@ -40,23 +40,22 @@ function MessageAddForm() {
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
-			setResponseStatus('ERROR');
-			setResponseData('Something went wrong.');
+			setResponseData(<MessageAddResponse response={responseJSON} />);
 
-			if (response.ok) {
-				setResponseData(<MessageAddResponse response={responseJSON} />);
-			}
-
-			if (responseStatusCode === 200) {
-				setResponseStatus('SUCESS');
-			}
-
-			if (responseStatusCode === 202 || responseStatusCode === 204) {
-				setResponseStatus('WARNING');
-			}
-
-			if (responseStatusCode === 400) {
-				setResponseStatus('ERROR');
+			switch (responseStatusCode) {
+				case 200:
+					setResponseStatus('SUCESS');
+					break;
+				case 202 || 204:
+					setResponseStatus('WARNING');
+					break;
+				case 400:
+					setResponseStatus('ERROR');
+					break;
+				default:
+					setResponseStatus('ERROR');
+					setResponseData('Something went wrong.');
+					break;
 			}
 		} catch (error) {
 			setResponseStatus('ERROR');
