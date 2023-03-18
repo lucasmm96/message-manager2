@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
 
@@ -56,14 +57,7 @@ function MessageEditForm(props) {
 
 	async function submitHandler(data) {
 		try {
-			const response = await fetch(`${process.env.API_URL}/message/update`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
+			const response = await post('/message/update', data);
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 

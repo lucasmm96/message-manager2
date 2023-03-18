@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
 import MessageAddResponse from './MessageAddResponse';
@@ -30,14 +31,7 @@ function MessageAddForm() {
 
 	async function submitHandler(data) {
 		try {
-			const response = await fetch(`${process.env.API_URL}/message/add`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
-
+			const response = await post('/message/add', data);
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
