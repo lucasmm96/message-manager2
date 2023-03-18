@@ -6,7 +6,8 @@ import classes from '@/components/layout/Header.module.css';
 import IconLink from '@/components/ui/IconLink';
 
 function MainNavigation() {
-	const smallScreen = useMedia('(max-width: 768px)');
+	const defaultState = false;
+	const smallScreen = useMedia('(max-width: 768px)', defaultState);
 
 	return (
 		<header className={classes.header}>
