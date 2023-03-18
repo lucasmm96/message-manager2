@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
 import MessageAddResponse from './MessageAddResponse';
 
@@ -42,20 +43,12 @@ function MessageAddForm() {
 
 			setResponseData(<MessageAddResponse response={responseJSON} />);
 
-			switch (responseStatusCode) {
-				case 200:
-					setResponseStatus('SUCESS');
-					break;
-				case 202 || 204:
-					setResponseStatus('WARNING');
-					break;
-				case 400:
-					setResponseStatus('ERROR');
-					break;
-				default:
-					setResponseStatus('ERROR');
-					setResponseData('Something went wrong.');
-					break;
+			const { resStatus, resData } = statusCodeHandler(responseStatusCode);
+
+			setResponseStatus(resStatus);
+
+			if (resData !== '') {
+				setResponseData(resData);
 			}
 		} catch (error) {
 			setResponseStatus('ERROR');

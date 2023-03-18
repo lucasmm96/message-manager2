@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
 
 function MessageEditForm(props) {
@@ -66,23 +67,14 @@ function MessageEditForm(props) {
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
-			setResponseStatus('ERROR');
-			setResponseData('Something went wrong.');
+			setResponseData(responseJSON.message);
 
-			if (response.ok) {
-				setResponseData(responseJSON.message);
-			}
+			const { resStatus, resData } = statusCodeHandler(responseStatusCode);
 
-			if (responseStatusCode === 200) {
-				setResponseStatus('SUCESS');
-			}
+			setResponseStatus(resStatus);
 
-			if (responseStatusCode === 202 || responseStatusCode === 204) {
-				setResponseStatus('WARNING');
-			}
-
-			if (responseStatusCode === 400) {
-				setResponseStatus('ERROR');
+			if (resData !== '') {
+				setResponseData(resData);
 			}
 		} catch (error) {
 			setResponseStatus('ERROR');
