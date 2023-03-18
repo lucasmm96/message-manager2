@@ -1,5 +1,12 @@
+import Head from '@/components/layout/CustomHead';
+
 function Auth() {
-	return <h1>Auth Page</h1>;
+	return (
+		<>
+			<Head title="Auth" />
+			<h1>Auth Page</h1>;
+		</>
+	);
 }
 
 export default Auth;
