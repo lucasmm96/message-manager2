@@ -22,19 +22,13 @@
 }
 
 .formContainer button {
-	width: 30%;
+	width: 25%;
 	font-size: 17px;
 }
 
 @media screen and (max-width: 992px) {
 	.formContainer button {
-		width: 30%;
-	}
-}
-
-@media screen and (max-width: 768px) {
-	.formContainer button {
-		width: 100%;
+		width: 90%;
 	}
 
 	.formContainer button:not(:first-child) {
