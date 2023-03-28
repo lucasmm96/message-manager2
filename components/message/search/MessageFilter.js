@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import classes from '@/components/message/search/MessageFilter.module.css';
-
 import MessageFilterButton from '@/components/message/search/MessageFilterButton';
 import MessageFilterInput from '@/components/message/search/MessageFilterInput';
 
@@ -12,6 +10,7 @@ function MessageFilter(props) {
 		allMessages: true,
 		postedMessages: false,
 		notPostedMessages: false,
+		pendingMessages: false,
 		customSearch: false,
 	});
 
@@ -22,6 +21,7 @@ function MessageFilter(props) {
 			allMessages: true,
 			postedMessages: false,
 			notPostedMessages: false,
+			pendingMessages: false,
 			customSearch: false,
 		});
 		props.onApplyFilter(messages);
@@ -36,6 +36,7 @@ function MessageFilter(props) {
 			allMessages: false,
 			postedMessages: true,
 			notPostedMessages: false,
+			pendingMessages: false,
 			customSearch: false,
 		});
 		props.onApplyFilter(filteredData);
@@ -49,6 +50,21 @@ function MessageFilter(props) {
 			allMessages: false,
 			postedMessages: false,
 			notPostedMessages: true,
+			pendingMessages: false,
+			customSearch: false,
+		});
+		props.onApplyFilter(filteredData);
+	}
+
+	function pendingMessages() {
+		const filteredData = messages.filter(
+			(message) => message.postUrl.post === '' || message.postUrl.story === ''
+		);
+		setSelections({
+			allMessages: false,
+			postedMessages: false,
+			notPostedMessages: false,
+			pendingMessages: true,
 			customSearch: false,
 		});
 		props.onApplyFilter(filteredData);
@@ -76,6 +92,7 @@ function MessageFilter(props) {
 			allMessages: false,
 			postedMessages: false,
 			notPostedMessages: false,
+			pendingMessages: false,
 			customSearch: true,
 		});
 
@@ -83,7 +100,7 @@ function MessageFilter(props) {
 	}
 
 	return (
-		<div className={classes.filterContainer}>
+		<div className="container">
 			<MessageFilterButton
 				method={allMessages}
 				label="All"
@@ -98,6 +115,11 @@ function MessageFilter(props) {
 				method={notPostedMessages}
 				label="Not Posted"
 				selected={selections.notPostedMessages}
+			/>
+			<MessageFilterButton
+				method={pendingMessages}
+				label="Pending"
+				selected={selections.pendingMessages}
 			/>
 			<MessageFilterInput
 				method={changeHandler}
