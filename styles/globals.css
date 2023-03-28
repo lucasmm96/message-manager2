@@ -1,4 +1,4 @@
-/* resolutions: 480px / 768p / 992p / 1200p / 1440p / 1920px */
+/* resolutions: 480px / 768px / 992px / 1200px / 1366px / 1440p / 1680px / 1920px */
 
 * {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
@@ -13,7 +13,7 @@ body {
 .container {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: flex-start;
 	align-items: stretch;
 	max-width: 100%;
 	margin: 0 auto 5% auto;
@@ -27,7 +27,7 @@ body {
 	flex-direction: column;
 	width: 22%;
 	height: auto;
-	margin-bottom: 20px;
+	margin: 0 20px 20px 20px;
 }
 
 .textCenter {
@@ -40,20 +40,20 @@ body {
 	}
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1680px) {
 	.containerItem {
 		width: 30%;
 	}
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1440px) {
 	.containerItem {
-		width: 47%;
+		width: 45%;
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
 	.containerItem {
-		width: 97%;
+		width: 90%;
 	}
 }
