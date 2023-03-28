@@ -18,14 +18,16 @@ function FormInput(props) {
 					<label className={classes.label} htmlFor={props.name}>
 						{props.label}
 					</label>
-					<IconLink
-						href={props.value}
-						newTab={true}
-						filename="link.svg"
-						alt="Open Link"
-						w={20}
-						h={20}
-					/>
+					{props.value && (
+						<IconLink
+							href={props.value}
+							newTab={true}
+							filename="link.svg"
+							alt="Open Link"
+							w={20}
+							h={20}
+						/>
+					)}
 				</div>
 			)}
 			{props.type !== 'url' && (
