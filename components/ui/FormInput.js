@@ -19,7 +19,7 @@ function FormInput(props) {
 						{props.label}
 					</label>
 					<IconLink
-						href={props.name}
+						href={props.value}
 						newTab={true}
 						filename="link.svg"
 						alt="Open Link"
