@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import Head from '@/components/layout/CustomHead';
-import MessageFilter from '@/components/message/search/messageFilter';
+import MessageFilter from '@/components/message/search/MessageFilter';
 import MessageItem from '@/components/message/search/MessageItem';
 
 export default function MessageSearch(props) {
