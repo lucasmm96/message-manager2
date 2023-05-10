@@ -1,7 +1,8 @@
 import classes from '@/components/ui/FormInput.module.css';
 
-import IconLink from '@/components/ui/IconLink';
-import Switcher from '../ui/input/Switcher';
+import InputLabel from '@/components/ui/input/InputLabel';
+import TextInput from '@/components/ui/input/TextInput';
+import Switcher from '@/components/ui/input/Switcher';
 
 function FormInput(props) {
 	function onChangeHandler(event) {
@@ -18,38 +19,29 @@ function FormInput(props) {
 
 	return (
 		<div className={classes.group}>
-			{props.type === 'url' && (
-				<div>
-					<label className={classes.label} htmlFor={props.name}>
-						{props.label}
-					</label>
-					{props.value && (
-						<IconLink
-							href={props.value}
-							newTab={true}
-							filename="link.svg"
-							alt="Open Link"
-							w={20}
-							h={20}
-						/>
-					)}
-				</div>
-			)}
 			{props.type !== 'url' && (
-				<label className={classes.label} htmlFor={props.name}>
-					{props.label}
-				</label>
+				<InputLabel htmlFor={props.name} label={props.label} />
+			)}
+			{props.type === 'url' && (
+				<InputLabel
+					htmlFor={props.name}
+					href={props.href}
+					label={props.label}
+					type={props.type}
+					value={props.value}
+				/>
 			)}
 			{props.type !== 'switcher' && (
-				<input
-					id={props.name}
-					className={classes.input}
-					type={props.type}
-					name={props.name}
-					value={props.value || ''}
-					onChange={onChangeHandler}
-					onBlur={onBlurHandler}
-				/>
+				<>
+					<TextInput
+						id={props.name}
+						type={props.type}
+						name={props.name}
+						value={props.value || ''}
+						onChangeHandler={onChangeHandler}
+						onBlurHandler={onBlurHandler}
+					/>
+				</>
 			)}
 			{props.type === 'switcher' && (
 				<Switcher id={props.name} onSwitcherHandler={onSwitcherHandler} />
