@@ -1,10 +1,15 @@
 import classes from '@/components/ui/FormInput.module.css';
 
 import IconLink from '@/components/ui/IconLink';
+import Switcher from '../ui/input/Switcher';
 
 function FormInput(props) {
 	function onChangeHandler(event) {
 		props.onChangeHandler(event);
+	}
+
+	function onSwitcherHandler(active) {
+		props.onSwitcherHandler(active);
 	}
 
 	function onBlurHandler(event) {
@@ -35,15 +40,20 @@ function FormInput(props) {
 					{props.label}
 				</label>
 			)}
-			<input
-				id={props.name}
-				className={classes.input}
-				type={props.type}
-				name={props.name}
-				value={props.value || ''}
-				onChange={onChangeHandler}
-				onBlur={onBlurHandler}
-			/>
+			{props.type !== 'switcher' && (
+				<input
+					id={props.name}
+					className={classes.input}
+					type={props.type}
+					name={props.name}
+					value={props.value || ''}
+					onChange={onChangeHandler}
+					onBlur={onBlurHandler}
+				/>
+			)}
+			{props.type === 'switcher' && (
+				<Switcher id={props.name} onSwitcherHandler={onSwitcherHandler} />
+			)}
 			{props.required && !props.valid && props.blur && (
 				<span className={classes.error}>This field is required</span>
 			)}
