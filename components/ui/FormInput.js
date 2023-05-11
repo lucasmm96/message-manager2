@@ -9,8 +9,8 @@ function FormInput(props) {
 		props.onChangeHandler(event);
 	}
 
-	function onSwitcherHandler(active) {
-		props.onSwitcherHandler(active);
+	function onSwitcherHandler() {
+		props.onSwitcherHandler();
 	}
 
 	function onBlurHandler(event) {
