@@ -11,7 +11,7 @@ function Switcher(props) {
 		const label = active ? 'ON' : 'OFF';
 
 		setStatus({ label: label, active: active });
-		props.onSwitcherHandler();
+		props.onSwitcherHandler(event);
 	}
 
 	return (
