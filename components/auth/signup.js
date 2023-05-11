@@ -110,7 +110,8 @@ function Login(props) {
 		router.push('/');
 	}
 
-	function onSelectLoginHandler() {
+	function onSelectLoginHandler(event) {
+		event.preventDefault();
 		props.onSelectLoginHandler();
 	}
 

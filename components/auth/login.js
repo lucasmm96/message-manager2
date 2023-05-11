@@ -81,7 +81,8 @@ function Login(props) {
 		router.push('/');
 	}
 
-	function onSelectSignupHandler() {
+	function onSelectSignupHandler(event) {
+		event.preventDefault();
 		props.onSelectSignupHandler();
 	}
 
