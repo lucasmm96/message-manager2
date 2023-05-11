@@ -4,6 +4,7 @@ import { useMedia } from 'react-use';
 import classes from '@/components/layout/Header.module.css';
 
 import IconLink from '@/components/ui/IconLink';
+import Dropdown from '../ui/Dropdown';
 
 function MainNavigation() {
 	const defaultState = false;
@@ -39,14 +40,7 @@ function MainNavigation() {
 					{!smallScreen && (
 						<>
 							<li className={`${classes.logo} ${classes.right}`}>
-								<IconLink
-									href={'/auth'}
-									newTab={false}
-									filename="circle-user-solid.svg"
-									alt="Auth"
-									w={20}
-									h={20}
-								/>
+								<Dropdown />
 							</li>
 							<li className={classes.right}>
 								<Link href="/add-message">Add New Message</Link>
