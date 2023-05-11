@@ -10,44 +10,46 @@ import post from '@/utils/httpRequests/post';
 function Login(props) {
 	const router = useRouter();
 
-	const [email, setEmail] = useState({
-		value: '',
-		required: true,
-		valid: false,
-		onBlur: false,
+	const [loginData, setLoginData] = useState({
+		email: {
+			value: '',
+			required: true,
+			valid: false,
+			onBlur: false,
+		},
+		password: {
+			value: '',
+			required: true,
+			valid: false,
+			onBlur: false,
+		},
 	});
-	const [password, setPassword] = useState({
-		value: '',
-		required: true,
-		valid: false,
-		onBlur: false,
-	});
 
-	function emailBlurHandler() {
-		setEmail({ ...email, onBlur: true });
-	}
+	function changeHandler(event) {
+		const eventName = event.target.name;
+		const eventValue = event.target.value;
 
-	function passwordBlurHandler() {
-		setPassword({ ...password, onBlur: true });
-	}
-
-	function emailChangeHandler(event) {
-		const emailValue = event.target.value;
-
-		setEmail({
-			...email,
-			value: emailValue,
-			valid: email.required ? emailValue !== '' : email.valid,
+		setLoginData({
+			...loginData,
+			[eventName]: {
+				...loginData[eventName],
+				value: eventValue,
+				valid: loginData[eventName].required
+					? eventValue !== ''
+					: [eventName].valid,
+			},
 		});
 	}
 
-	function passwordChangeHandler(event) {
-		const passwordValue = event.target.value;
+	function blurHandler(event) {
+		const eventName = event.target.name;
 
-		setPassword({
-			...password,
-			value: passwordValue,
-			valid: password.required ? passwordValue !== '' : password.valid,
+		setLoginData({
+			...loginData,
+			[eventName]: {
+				...loginData[eventName],
+				onBlur: true,
+			},
 		});
 	}
 
@@ -55,8 +57,8 @@ function Login(props) {
 		event.preventDefault();
 		try {
 			const response = await post('/auth/login', {
-				email: email.value,
-				password: password.value,
+				email: loginData.email.value,
+				password: loginData.password.value,
 			});
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
@@ -94,23 +96,23 @@ function Login(props) {
 						name="email"
 						label="Email"
 						type="email"
-						required={email.required}
-						value={email.value}
-						valid={email.valid}
-						blur={email.onBlur}
-						onChangeHandler={emailChangeHandler}
-						onBlurHandler={emailBlurHandler}
+						required={loginData.email.required}
+						value={loginData.email.value}
+						valid={loginData.email.valid}
+						blur={loginData.email.onBlur}
+						onChangeHandler={changeHandler}
+						onBlurHandler={blurHandler}
 					/>
 					<FormInput
 						name="password"
 						label="Password"
 						type="password"
-						required={password.required}
-						value={password.value}
-						valid={password.valid}
-						blur={password.onBlur}
-						onChangeHandler={passwordChangeHandler}
-						onBlurHandler={passwordBlurHandler}
+						required={loginData.password.required}
+						value={loginData.password.value}
+						valid={loginData.password.valid}
+						blur={loginData.password.onBlur}
+						onChangeHandler={changeHandler}
+						onBlurHandler={blurHandler}
 					/>
 				</>
 			}
@@ -120,7 +122,7 @@ function Login(props) {
 						label="Login"
 						classes="containerItem"
 						click={submitHandler}
-						disabled={!email.valid || !password.valid}
+						disabled={!loginData.email.valid || !loginData.password.valid}
 					/>
 					<Button
 						label="Signup"
