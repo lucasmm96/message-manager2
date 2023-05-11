@@ -25,7 +25,7 @@ function MainNavigation() {
 						/>
 					</li>
 					{smallScreen && (
-						<li className={classes.right}>
+						<li className={`${classes.logo} ${classes.right}`}>
 							<IconLink
 								href={'/auth'}
 								newTab={false}
@@ -38,7 +38,7 @@ function MainNavigation() {
 					)}
 					{!smallScreen && (
 						<>
-							<li className={classes.right}>
+							<li className={`${classes.logo} ${classes.right}`}>
 								<IconLink
 									href={'/auth'}
 									newTab={false}
