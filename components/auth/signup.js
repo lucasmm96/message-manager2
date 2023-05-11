@@ -4,78 +4,48 @@ import Form from '@/components/ui/Form';
 import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
 
-function Login(props) {
-	const [username, setUsername] = useState({
-		value: '',
-		required: true,
-		valid: false,
-		onBlur: false,
-	});
-	const [email, setEmail] = useState({
-		value: '',
-		required: true,
-		valid: false,
-		onBlur: false,
-	});
-	const [password, setPassword] = useState({
-		value: '',
-		required: true,
-		valid: false,
-		onBlur: false,
-	});
-	const [admin, setAdmin] = useState({
-		value: false,
-		required: true,
-		valid: true,
-		onBlur: true,
+function Signup(props) {
+	const [signupData, setSignupData] = useState({
+		username: { value: '', required: true, valid: false, onBlur: false },
+		email: { value: '', required: true, valid: false, onBlur: false },
+		password: { value: '', required: true, valid: false, onBlur: false },
+		admin: { value: false },
 	});
 
-	function usernameBlurHandler() {
-		setUsername({ ...username, onBlur: true });
-	}
+	function changeHandler(event) {
+		const eventName = event.target.name;
+		const eventValue = event.target.value;
 
-	function emailBlurHandler() {
-		setEmail({ ...email, onBlur: true });
-	}
-
-	function passwordBlurHandler() {
-		setPassword({ ...password, onBlur: true });
-	}
-
-	function usernameChangeHandler(event) {
-		const usernameValue = event.target.value;
-
-		setUsername({
-			...email,
-			value: usernameValue,
-			valid: username.required ? usernameValue !== '' : username.valid,
+		setSignupData({
+			...signupData,
+			[eventName]: {
+				...signupData[eventName],
+				value: eventValue,
+				valid: signupData[eventName].required
+					? eventValue !== ''
+					: [eventName].valid,
+			},
 		});
 	}
 
-	function emailChangeHandler(event) {
-		const emailValue = event.target.value;
-
-		setEmail({
-			...email,
-			value: emailValue,
-			valid: email.required ? emailValue !== '' : email.valid,
+	function switcherHandler() {
+		setSignupData({
+			...signupData,
+			admin: {
+				value: !signupData.admin.value,
+			},
 		});
 	}
 
-	function passwordChangeHandler(event) {
-		const passwordValue = event.target.value;
+	function blurHandler(event) {
+		const eventName = event.target.name;
 
-		setPassword({
-			...password,
-			value: passwordValue,
-			valid: password.required ? passwordValue !== '' : password.valid,
-		});
-	}
-
-	function adminChangeHandler(active) {
-		setAdmin({
-			...admin,
-			value: active,
+		setSignupData({
+			...signupData,
+			[eventName]: {
+				...signupData[eventName],
+				onBlur: true,
+			},
 		});
 	}
 
@@ -83,9 +53,9 @@ function Login(props) {
 		event.preventDefault();
 		try {
 			const response = await post('/auth/signup', {
-				username: username.value,
-				email: email.value,
-				password: password.value,
+				username: signupData.username.value,
+				email: signupData.email.value,
+				password: signupData.password.value,
 			});
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
@@ -123,40 +93,40 @@ function Login(props) {
 						name="username"
 						label="Username"
 						type="text"
-						required={username.required}
-						value={username.value}
-						valid={username.valid}
-						blur={username.onBlur}
-						onChangeHandler={usernameChangeHandler}
-						onBlurHandler={usernameBlurHandler}
+						required={signupData.username.required}
+						value={signupData.username.value}
+						valid={signupData.username.valid}
+						blur={signupData.username.onBlur}
+						onChangeHandler={changeHandler}
+						onBlurHandler={blurHandler}
 					/>
 					<FormInput
 						name="email"
 						label="Email"
 						type="email"
-						required={email.required}
-						value={email.value}
-						valid={email.valid}
-						blur={email.onBlur}
-						onChangeHandler={emailChangeHandler}
-						onBlurHandler={emailBlurHandler}
+						required={signupData.email.required}
+						value={signupData.email.value}
+						valid={signupData.email.valid}
+						blur={signupData.email.onBlur}
+						onChangeHandler={changeHandler}
+						onBlurHandler={blurHandler}
 					/>
 					<FormInput
 						name="password"
 						label="Password"
 						type="password"
-						required={password.required}
-						value={password.value}
-						valid={password.valid}
-						blur={password.onBlur}
-						onChangeHandler={passwordChangeHandler}
-						onBlurHandler={passwordBlurHandler}
+						required={signupData.password.required}
+						value={signupData.password.value}
+						valid={signupData.password.valid}
+						blur={signupData.password.onBlur}
+						onChangeHandler={changeHandler}
+						onBlurHandler={blurHandler}
 					/>
 					<FormInput
 						name="admin"
 						label="Admin"
 						type="switcher"
-						onSwitcherHandler={adminChangeHandler}
+						onSwitcherHandler={switcherHandler}
 					/>
 				</>
 			}
@@ -166,7 +136,11 @@ function Login(props) {
 						label="Signup"
 						classes="containerItem"
 						click={submitHandler}
-						disabled={!username.valid || !email.valid || !password.valid}
+						disabled={
+							!signupData.username.valid ||
+							!signupData.email.valid ||
+							!signupData.password.valid
+						}
 					/>
 					<Button
 						label="Login"
@@ -179,4 +153,4 @@ function Login(props) {
 	);
 }
 
-export default Login;
+export default Signup;
