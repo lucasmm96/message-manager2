@@ -1,10 +1,15 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import Form from '@/components/ui/Form';
 import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
 
+import post from '@/utils/httpRequests/post';
+
 function Signup(props) {
+	const router = useRouter();
+
 	const [signupData, setSignupData] = useState({
 		username: { value: '', required: true, valid: false, onBlur: false },
 		email: { value: '', required: true, valid: false, onBlur: false },
@@ -28,7 +33,8 @@ function Signup(props) {
 		});
 	}
 
-	function switcherHandler() {
+	function switcherHandler(event) {
+		event.preventDefault();
 		setSignupData({
 			...signupData,
 			admin: {
@@ -56,6 +62,7 @@ function Signup(props) {
 				username: signupData.username.value,
 				email: signupData.email.value,
 				password: signupData.password.value,
+				admin: signupData.admin.value
 			});
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
