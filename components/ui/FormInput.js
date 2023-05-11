@@ -9,7 +9,8 @@ function FormInput(props) {
 		props.onChangeHandler(event);
 	}
 
-	function onSwitcherHandler() {
+	function onSwitcherHandler(event) {
+		event.preventDefault();
 		props.onSwitcherHandler();
 	}
 
