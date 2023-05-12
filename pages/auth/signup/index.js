@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import Head from '@/components/layout/CustomHead';
-import Signup from '@/components/auth/signup';
+import Signup from '@/components/auth/Signup';
 
 function AuthSignup() {
 	const router = useRouter();
