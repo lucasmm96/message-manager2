@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+
 import classes from '@/components/ui/Dropdown.module.css';
 
 import Icon from '@/components/ui/Icon';
 
-function Dropdown() {
+function Dropdown(props) {
 	const [isOpen, setIsOpen] = useState(false);
 
 	function openMenu() {
@@ -18,7 +19,12 @@ function Dropdown() {
 	return (
 		<div>
 			<a className={classes.iconButton} onMouseOver={openMenu}>
-				<Icon filename="circle-user-solid.svg" alt="Auth" w={20} h={20} />
+				<Icon
+					filename={props.icon.filename}
+					alt={props.icon.alt}
+					w={props.icon.w}
+					h={props.icon.h}
+				/>
 			</a>
 			{isOpen && (
 				<ul
@@ -26,12 +32,11 @@ function Dropdown() {
 					onMouseOver={openMenu}
 					onMouseLeave={closeMenu}
 				>
-					<li>
-						<Link href="/auth/login">Login</Link>
-					</li>
-					<li>
-						<Link href="/auth/signup">Signup</Link>
-					</li>
+					{props.list.map((item) => (
+						<li>
+							<Link href={item.href}>{item.label}</Link>
+						</li>
+					))}
 				</ul>
 			)}
 		</div>

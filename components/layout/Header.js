@@ -40,7 +40,18 @@ function MainNavigation() {
 					{!smallScreen && (
 						<>
 							<li className={`${classes.logo} ${classes.right}`}>
-								<Dropdown />
+								<Dropdown
+									icon={{
+										filename: 'circle-user-solid.svg',
+										alt: 'Auth',
+										w: 20,
+										h: 20,
+									}}
+									list={[
+										{ href: '/auth/login', label: 'Login' },
+										{ href: '/auth/signup', label: 'Signup' },
+									]}
+								/>
 							</li>
 							<li className={classes.right}>
 								<Link href="/add-message">Add New Message</Link>
