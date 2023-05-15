@@ -128,7 +128,7 @@ function Login(props) {
 						disabled={!loginData.email.valid || !loginData.password.valid}
 					/>
 					<Button
-						label="Signup"
+						label="Switch to Signup"
 						classes="containerItem"
 						click={onSelectSignupHandler}
 					/>

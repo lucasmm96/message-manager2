@@ -62,7 +62,7 @@ function Signup(props) {
 				username: signupData.username.value,
 				email: signupData.email.value,
 				password: signupData.password.value,
-				admin: signupData.admin.value
+				admin: signupData.admin.value,
 			});
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
@@ -150,7 +150,7 @@ function Signup(props) {
 						}
 					/>
 					<Button
-						label="Login"
+						label="Switch to Login"
 						classes="containerItem"
 						click={onSelectLoginHandler}
 					/>
