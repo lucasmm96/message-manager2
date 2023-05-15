@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 
 import classes from '@/components/ui/Dropdown.module.css';
 
@@ -22,8 +21,8 @@ function Dropdown(props) {
 				<Icon
 					filename={props.icon.filename}
 					alt={props.icon.alt}
-					w={props.icon.w}
-					h={props.icon.h}
+					w={20}
+					h={20}
 				/>
 			</a>
 			{isOpen && (
@@ -32,11 +31,7 @@ function Dropdown(props) {
 					onMouseOver={openMenu}
 					onMouseLeave={closeMenu}
 				>
-					{props.list.map((item) => (
-						<li>
-							<Link href={item.href}>{item.label}</Link>
-						</li>
-					))}
+					{props.children}
 				</ul>
 			)}
 		</div>
