@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import Form from '@/components/ui/Form';
@@ -6,9 +6,11 @@ import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
 
 import post from '@/utils/httpRequests/post';
+import AuthContext from '@/context/AuthContext';
 
 function Login(props) {
 	const router = useRouter();
+	const auth = useContext(AuthContext);
 
 	const [loginData, setLoginData] = useState({
 		email: {
@@ -63,8 +65,9 @@ function Login(props) {
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
-			console.log(responseJSON);
-			console.log(responseStatusCode);
+			auth.login(responseJSON.token);
+
+			// console.log(responseStatusCode);
 
 			// setResponseData(<MessageAddResponse response={responseJSON} />);
 
