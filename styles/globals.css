@@ -1,4 +1,4 @@
-/* resolutions: 480px / 768px / 992px / 1200px / 1366px / 1440p / 1680px / 1920px */
+/* resolutions: 320px / 480px / 768px / 992px / 1200px / 1366px / 1440p / 1680px / 1920px */
 
 * {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
@@ -6,6 +6,7 @@
 }
 
 body {
+	min-width: 320px;
 	margin: 0;
 	background-color: lightgray;
 }
