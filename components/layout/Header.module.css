@@ -31,7 +31,9 @@
 
 .header a {
 	text-decoration: none;
+	cursor: pointer;
 	color: #fff;
+	margin: 0 3px 0 3px;
 	padding: 10px;
 	background-color: #333;
 	border-radius: 5px;
@@ -39,4 +41,12 @@
 
 .header a:hover {
 	background-color: #444;
+}
+
+.header .login a {
+	background-color: #008cba;
+}
+
+.header .login a:hover {
+	background-color: #005c8a;
 }
