@@ -1,5 +1,28 @@
-import '@/styles/globals.css'
+import Layout from '@/components/layout/Layout';
+import AuthContext from '@/context/AuthContext';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import useAuth from '@/hooks/auth-hook';
+
+import '@/styles/globals.css';
+
+function App({ Component, pageProps }) {
+	// const [authInfo, setAuthInfo] = useState(AuthContext);
+	const { token, login, logout } = useAuth();
+
+	return (
+		<AuthContext.Provider
+			value={{
+				isLoggedIn: !!token,
+				token: token,
+				login: login,
+				logout: logout,
+			}}
+		>
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</AuthContext.Provider>
+	);
 }
+
+export default App;

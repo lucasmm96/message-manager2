@@ -1,0 +1,49 @@
+.header {
+	background-color: #333;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 10px;
+	z-index: 9999;
+	font-size: medium;
+}
+
+.header ul {
+	list-style: none;
+	margin: 0 5% 0 5%;
+	padding: 0;
+}
+
+.header .logo {
+	font-weight: bold;
+}
+
+.header .left {
+	float: left;
+}
+
+.header .right {
+	float: right;
+}
+
+.header a {
+	text-decoration: none;
+	cursor: pointer;
+	color: #fff;
+	margin: 0 3px 0 3px;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.header a:hover {
+	background-color: #444;
+}
+
+.header .login a {
+	background-color: #008cba;
+}
+
+.header .login a:hover {
+	background-color: #005c8a;
+}
