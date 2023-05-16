@@ -6,6 +6,7 @@
 	width: 100%;
 	padding: 10px;
 	z-index: 9999;
+	font-size: medium;
 }
 
 .header ul {
@@ -15,17 +16,14 @@
 }
 
 .header .logo {
-	font-size: large;
 	font-weight: bold;
 }
 
 .header .left {
-	display: inline;
 	float: left;
 }
 
 .header .right {
-	display: inline;
 	float: right;
 }
 
@@ -35,7 +33,6 @@
 	color: #fff;
 	margin: 0 3px 0 3px;
 	padding: 10px;
-	background-color: #333;
 	border-radius: 5px;
 }
 
