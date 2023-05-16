@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Form from '@/components/ui/Form';
 import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
+import Modal from '../ui/Modal';
 
 import post from '@/utils/httpRequests/post';
 import AuthContext from '@/context/AuthContext';
@@ -11,6 +12,13 @@ import AuthContext from '@/context/AuthContext';
 function Login(props) {
 	const router = useRouter();
 	const auth = useContext(AuthContext);
+
+	const [modalInfo, setModalInfo] = useState({
+		isOpen: false,
+		header: '',
+		body: '',
+		footer: '',
+	});
 
 	const [loginData, setLoginData] = useState({
 		email: {
@@ -55,6 +63,10 @@ function Login(props) {
 		});
 	}
 
+	function closeModalHandler() {
+		setModalInfo({ ...modalInfo, isOpen: false });
+	}
+
 	async function submitHandler(event) {
 		event.preventDefault();
 		try {
@@ -65,25 +77,20 @@ function Login(props) {
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
+			if (responseStatusCode >= 400) {
+				throw new Error(responseJSON.error);
+			}
+
 			auth.login(responseJSON.token);
-
-			// console.log(responseStatusCode);
-
-			// setResponseData(<MessageAddResponse response={responseJSON} />);
-
-			// const { resStatus, resData } = statusCodeHandler(responseStatusCode);
-
-			// setResponseStatus(resStatus);
-
-			// if (resData !== '') {
-			// 	setResponseData(resData);
-			// }
+			router.push('/');
 		} catch (error) {
-			// setResponseData(`Something went wrong. Error: (${error}).`);
-			console.log(`Something went wrong. Error: (${error}).`);
+			setModalInfo({
+				isOpen: true,
+				header: 'Error',
+				body: error.message,
+				footer: <Button label="OK" click={closeModalHandler} />,
+			});
 		}
-
-		router.push('/');
 	}
 
 	function onSelectSignupHandler(event) {
@@ -92,49 +99,57 @@ function Login(props) {
 	}
 
 	return (
-		<Form
-			input={
-				<>
-					<FormInput
-						name="email"
-						label="Email"
-						type="email"
-						required={loginData.email.required}
-						value={loginData.email.value}
-						valid={loginData.email.valid}
-						blur={loginData.email.onBlur}
-						onChangeHandler={changeHandler}
-						onBlurHandler={blurHandler}
-					/>
-					<FormInput
-						name="password"
-						label="Password"
-						type="password"
-						required={loginData.password.required}
-						value={loginData.password.value}
-						valid={loginData.password.valid}
-						blur={loginData.password.onBlur}
-						onChangeHandler={changeHandler}
-						onBlurHandler={blurHandler}
-					/>
-				</>
-			}
-			actions={
-				<>
-					<Button
-						label="Login"
-						classes="containerItem"
-						click={submitHandler}
-						disabled={!loginData.email.valid || !loginData.password.valid}
-					/>
-					<Button
-						label="Switch to Signup"
-						classes="containerItem"
-						click={onSelectSignupHandler}
-					/>
-				</>
-			}
-		/>
+		<>
+			<Modal
+				isOpen={modalInfo.isOpen}
+				header={modalInfo.header}
+				body={modalInfo.body}
+				footer={modalInfo.footer}
+			/>
+			<Form
+				input={
+					<>
+						<FormInput
+							name="email"
+							label="Email"
+							type="email"
+							required={loginData.email.required}
+							value={loginData.email.value}
+							valid={loginData.email.valid}
+							blur={loginData.email.onBlur}
+							onChangeHandler={changeHandler}
+							onBlurHandler={blurHandler}
+						/>
+						<FormInput
+							name="password"
+							label="Password"
+							type="password"
+							required={loginData.password.required}
+							value={loginData.password.value}
+							valid={loginData.password.valid}
+							blur={loginData.password.onBlur}
+							onChangeHandler={changeHandler}
+							onBlurHandler={blurHandler}
+						/>
+					</>
+				}
+				actions={
+					<>
+						<Button
+							label="Login"
+							classes="containerItem"
+							click={submitHandler}
+							disabled={!loginData.email.valid || !loginData.password.valid}
+						/>
+						<Button
+							label="Switch to Signup"
+							classes="containerItem"
+							click={onSelectSignupHandler}
+						/>
+					</>
+				}
+			/>
+		</>
 	);
 }
 

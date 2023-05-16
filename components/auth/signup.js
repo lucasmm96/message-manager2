@@ -4,11 +4,19 @@ import { useRouter } from 'next/router';
 import Form from '@/components/ui/Form';
 import FormInput from '@/components/ui/FormInput';
 import Button from '@/components/ui/Button';
+import Modal from '../ui/Modal';
 
 import post from '@/utils/httpRequests/post';
 
 function Signup(props) {
 	const router = useRouter();
+
+	const [modalInfo, setModalInfo] = useState({
+		isOpen: false,
+		header: '',
+		body: '',
+		footer: '',
+	});
 
 	const [signupData, setSignupData] = useState({
 		username: { value: '', required: true, valid: false, onBlur: false },
@@ -55,6 +63,10 @@ function Signup(props) {
 		});
 	}
 
+	function closeModalHandler() {
+		setModalInfo({ ...modalInfo, isOpen: false });
+	}
+
 	async function submitHandler(event) {
 		event.preventDefault();
 		try {
@@ -67,24 +79,20 @@ function Signup(props) {
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
-			console.log(responseJSON);
-			console.log(responseStatusCode);
+			if (responseStatusCode >= 400) {
+				throw new Error(responseJSON.error);
+			}
 
-			// setResponseData(<MessageAddResponse response={responseJSON} />);
-
-			// const { resStatus, resData } = statusCodeHandler(responseStatusCode);
-
-			// setResponseStatus(resStatus);
-
-			// if (resData !== '') {
-			// 	setResponseData(resData);
-			// }
+			auth.login(responseJSON.token);
+			router.push('/');
 		} catch (error) {
-			// setResponseData(`Something went wrong. Error: (${error}).`);
-			console.log(`Something went wrong. Error: (${error}).`);
+			setModalInfo({
+				isOpen: true,
+				header: 'Error',
+				body: error.message,
+				footer: <Button label="OK" click={closeModalHandler} />,
+			});
 		}
-
-		router.push('/');
 	}
 
 	function onSelectLoginHandler(event) {
@@ -93,70 +101,78 @@ function Signup(props) {
 	}
 
 	return (
-		<Form
-			input={
-				<>
-					<FormInput
-						name="username"
-						label="Username"
-						type="text"
-						required={signupData.username.required}
-						value={signupData.username.value}
-						valid={signupData.username.valid}
-						blur={signupData.username.onBlur}
-						onChangeHandler={changeHandler}
-						onBlurHandler={blurHandler}
-					/>
-					<FormInput
-						name="email"
-						label="Email"
-						type="email"
-						required={signupData.email.required}
-						value={signupData.email.value}
-						valid={signupData.email.valid}
-						blur={signupData.email.onBlur}
-						onChangeHandler={changeHandler}
-						onBlurHandler={blurHandler}
-					/>
-					<FormInput
-						name="password"
-						label="Password"
-						type="password"
-						required={signupData.password.required}
-						value={signupData.password.value}
-						valid={signupData.password.valid}
-						blur={signupData.password.onBlur}
-						onChangeHandler={changeHandler}
-						onBlurHandler={blurHandler}
-					/>
-					<FormInput
-						name="admin"
-						label="Admin"
-						type="switcher"
-						onSwitcherHandler={switcherHandler}
-					/>
-				</>
-			}
-			actions={
-				<>
-					<Button
-						label="Signup"
-						classes="containerItem"
-						click={submitHandler}
-						disabled={
-							!signupData.username.valid ||
-							!signupData.email.valid ||
-							!signupData.password.valid
-						}
-					/>
-					<Button
-						label="Switch to Login"
-						classes="containerItem"
-						click={onSelectLoginHandler}
-					/>
-				</>
-			}
-		/>
+		<>
+			<Modal
+				isOpen={modalInfo.isOpen}
+				header={modalInfo.header}
+				body={modalInfo.body}
+				footer={modalInfo.footer}
+			/>
+			<Form
+				input={
+					<>
+						<FormInput
+							name="username"
+							label="Username"
+							type="text"
+							required={signupData.username.required}
+							value={signupData.username.value}
+							valid={signupData.username.valid}
+							blur={signupData.username.onBlur}
+							onChangeHandler={changeHandler}
+							onBlurHandler={blurHandler}
+						/>
+						<FormInput
+							name="email"
+							label="Email"
+							type="email"
+							required={signupData.email.required}
+							value={signupData.email.value}
+							valid={signupData.email.valid}
+							blur={signupData.email.onBlur}
+							onChangeHandler={changeHandler}
+							onBlurHandler={blurHandler}
+						/>
+						<FormInput
+							name="password"
+							label="Password"
+							type="password"
+							required={signupData.password.required}
+							value={signupData.password.value}
+							valid={signupData.password.valid}
+							blur={signupData.password.onBlur}
+							onChangeHandler={changeHandler}
+							onBlurHandler={blurHandler}
+						/>
+						<FormInput
+							name="admin"
+							label="Admin"
+							type="switcher"
+							onSwitcherHandler={switcherHandler}
+						/>
+					</>
+				}
+				actions={
+					<>
+						<Button
+							label="Signup"
+							classes="containerItem"
+							click={submitHandler}
+							disabled={
+								!signupData.username.valid ||
+								!signupData.email.valid ||
+								!signupData.password.valid
+							}
+						/>
+						<Button
+							label="Switch to Login"
+							classes="containerItem"
+							click={onSelectLoginHandler}
+						/>
+					</>
+				}
+			/>
+		</>
 	);
 }
 
