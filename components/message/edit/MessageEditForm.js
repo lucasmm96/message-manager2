@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
+import AuthContext from '@/context/AuthContext';
 import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
 
 function MessageEditForm(props) {
 	const router = useRouter();
+	const auth = useContext(AuthContext);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modalType, setModalType] = useState('');
@@ -57,7 +59,7 @@ function MessageEditForm(props) {
 
 	async function submitHandler(data) {
 		try {
-			const response = await post('/message/update', data);
+			const response = await post('/message/update', data, auth.token);
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
@@ -93,13 +95,7 @@ function MessageEditForm(props) {
 
 	async function deleteHandler(data) {
 		try {
-			const response = await fetch(`${process.env.API_URL}/message/delete`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(data),
-			});
+			const response = await post('/message/delete', data, auth.token);
 
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;

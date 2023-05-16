@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
+import AuthContext from '@/context/AuthContext';
 import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
@@ -8,6 +9,7 @@ import MessageAddResponse from './MessageAddResponse';
 
 function MessageAddForm() {
 	const router = useRouter();
+	const auth = useContext(AuthContext);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [responseStatus, setResponseStatus] = useState('ERROR');
@@ -31,7 +33,7 @@ function MessageAddForm() {
 
 	async function submitHandler(data) {
 		try {
-			const response = await post('/message/add', data);
+			const response = await post('/message/add', data, auth.token);
 			const responseJSON = await response.json();
 			const responseStatusCode = response.status;
 
