@@ -11,7 +11,7 @@ function FormInput(props) {
 
 	function onSwitcherHandler(event) {
 		event.preventDefault();
-		props.onSwitcherHandler();
+		props.onSwitcherHandler(event);
 	}
 
 	function onBlurHandler(event) {
