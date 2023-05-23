@@ -10,7 +10,7 @@ function MessageForm(props) {
 	const [formData, setFormData] = useState({ ...props.data });
 	const [validForm, setValidForm] = useState(false);
 
-	useEffect((props) => {
+	useEffect(() => {
 		props.onChangeHandler(formData);
 		props.onBlurHandler(formData);
 
