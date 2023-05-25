@@ -81,11 +81,12 @@ function MessageEditForm(props) {
 	}
 
 	function cancelHandler() {
-		router.push('/');
+		router.replace('/message/list');
 	}
 
 	function closeHandler() {
 		setIsModalOpen(false);
+		router.replace('/message/edit');
 	}
 
 	function deleteHandlerConfirmation() {

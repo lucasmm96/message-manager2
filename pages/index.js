@@ -10,11 +10,11 @@ function Home() {
   const auth = useContext(AuthContext);
 
   function ListMessageHandler() {
-    router.push('/message/list');
+    router.replace('/message/list');
   }
 
   function AddMessageHandler() {
-    router.push('/message/add');
+    router.replace('/message/add');
   }
 
   function authHandler() {

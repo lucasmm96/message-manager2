@@ -82,7 +82,7 @@ function Login(props) {
 			}
 
 			auth.login(responseJSON.token);
-			router.push('/');
+			router.replace('/');
 		} catch (error) {
 			setModalInfo({
 				isOpen: true,

@@ -55,11 +55,12 @@ function MessageAddForm() {
 	}
 
 	function cancelHandler() {
-		router.push('/');
+		router.replace('/message/list');
 	}
 
 	function closeHandler() {
 		setIsModalOpen(false);
+		router.replace('/message/list');
 	}
 
 	return (

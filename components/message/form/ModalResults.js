@@ -27,7 +27,7 @@ function ModalResults(props) {
 
 	function closeHandler() {
 		if (responseStatus !== 'ERROR') {
-			router.push('/');
+			router.replace('/message/list');
 		}
 		props.onCloseHandler();
 	}

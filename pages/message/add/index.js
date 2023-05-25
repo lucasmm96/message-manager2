@@ -10,7 +10,7 @@ function AddMessage() {
 
   useEffect(() => {
     if (!token) {
-      router.push('/auth/login');
+      router.replace('/auth/login');
     }
   }, [token]);
 

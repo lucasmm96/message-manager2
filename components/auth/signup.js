@@ -84,7 +84,7 @@ function Signup(props) {
 			}
 
 			auth.login(responseJSON.token);
-			router.push('/');
+			router.replace('/auth/login');
 		} catch (error) {
 			setModalInfo({
 				isOpen: true,
