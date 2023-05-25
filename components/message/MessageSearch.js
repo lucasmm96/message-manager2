@@ -16,7 +16,7 @@ export default function MessageSearch(props) {
 
 	return (
 		<>
-			<Head title="Message Manager" />
+			<Head title="Message List" />
 			<h1>Messages</h1>
 			<h3>Records: {messagesLength}</h3>
 			<MessageFilter data={props.messages} onApplyFilter={applyFilter} />
