@@ -6,7 +6,6 @@ import useAuth from '@/hooks/auth-hook';
 import '@/styles/globals.css';
 
 function App({ Component, pageProps }) {
-	// const [authInfo, setAuthInfo] = useState(AuthContext);
 	const { token, login, logout } = useAuth();
 
 	return (
