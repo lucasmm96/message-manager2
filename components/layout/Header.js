@@ -45,10 +45,10 @@ function MainNavigation() {
 								</a>
 							</li>
 							<li className={classes.right}>
-								<Link href="/add-message">Add New Message</Link>
+								<Link href="/message/add">Add New Message</Link>
 							</li>
 							<li className={classes.right}>
-								<Link href="/">All Messages</Link>
+								<Link href="/message/list">All Messages</Link>
 							</li>
 						</>
 					)}
@@ -56,10 +56,10 @@ function MainNavigation() {
 						<li className={`${classes.logo} ${classes.right}`}>
 							<Dropdown icon={{ filename: 'bars-solid.svg', alt: 'Options' }}>
 								<li>
-									<Link href="/">All Messages</Link>
+									<Link href="/message/list">All Messages</Link>
 								</li>
 								<li>
-									<Link href="/">Add New Message</Link>
+									<Link href="/message/add">Add New Message</Link>
 								</li>
 								<li>
 									<a onClick={authHandler}>
