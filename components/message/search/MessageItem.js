@@ -58,7 +58,7 @@ function MessageItem(props) {
 								newTab={true}
 							/>
 							<MessageItemOptions
-								link={'/message-detail/'}
+								link={'/message/edit'}
 								data={{ ...message }}
 								label="Details"
 								newTab={false}
