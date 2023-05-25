@@ -5,23 +5,23 @@ import MessageFilter from '@/components/message/search/MessageFilter';
 import MessageItem from '@/components/message/search/MessageItem';
 
 export default function MessageSearch(props) {
-	const [messages, setMessages] = useState(props.messages);
+  const [messages, setMessages] = useState(props.messages);
 
-	function applyFilter(data) {
-		setMessages(data);
-	}
+  function applyFilter(data) {
+    setMessages(data);
+  }
 
-	const messagesLength = messages.length;
-	const emptyMessage = messagesLength <= 0;
+  const messagesLength = messages.length;
+  const emptyMessage = messagesLength <= 0;
 
-	return (
-		<>
-			<Head title="Message Manager" />
-			<h1>Messages</h1>
-			<h3>Records: {messagesLength}</h3>
-			<MessageFilter data={props.messages} onApplyFilter={applyFilter} />
-			{emptyMessage && <h3 className="textCenter">No Matches Found</h3>}
-			{!emptyMessage && <MessageItem messages={messages} />}
-		</>
-	);
+  return (
+    <>
+      <Head title="Message List" />
+      <h1>Messages</h1>
+      <h3>Records: {messagesLength}</h3>
+      <MessageFilter data={props.messages} onApplyFilter={applyFilter} />
+      {emptyMessage && <h3 className="textCenter">No Matches Found</h3>}
+      {!emptyMessage && <MessageItem messages={messages} />}
+    </>
+  );
 }
