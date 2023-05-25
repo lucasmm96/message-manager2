@@ -1,61 +1,61 @@
 /* resolutions: 320px / 480px / 768px / 992px / 1200px / 1366px / 1440p / 1680px / 1920px */
 
 * {
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
-	min-width: 320px;
-	margin: 0;
-	background-color: lightgray;
+  min-width: 320px;
+  margin: 0;
+  background-color: lightgray;
 }
 
 .container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-items: stretch;
-	max-width: 100%;
-	margin: 0 auto 5% auto;
-	padding: 20px;
-	box-sizing: border-box;
-	background-color: #f2f2f2;
-	border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  max-width: 100%;
+  margin: 0 auto 5% auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+  border-radius: 5px;
 }
 
 .containerItem {
-	display: flex;
-	flex-direction: column;
-	width: 22%;
-	height: auto;
-	margin: 0 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  width: 22%;
+  height: auto;
+  margin: 0 20px 20px 20px;
 }
 
 .textCenter {
-	text-align: center;
+  text-align: center;
 }
 
 @media screen and (max-width: 1920px) {
-	.containerItem {
-		width: 22%;
-	}
+  .containerItem {
+    width: 22%;
+  }
 }
 
 @media screen and (max-width: 1680px) {
-	.containerItem {
-		width: 30%;
-	}
+  .containerItem {
+    width: 30%;
+  }
 }
 
 @media screen and (max-width: 1440px) {
-	.containerItem {
-		width: 45%;
-	}
+  .containerItem {
+    width: 45%;
+  }
 }
 
 @media screen and (max-width: 992px) {
-	.containerItem {
-		width: 90%;
-	}
+  .containerItem {
+    width: 90%;
+  }
 }

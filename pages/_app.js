@@ -6,22 +6,22 @@ import useAuth from '@/hooks/auth-hook';
 import '@/styles/globals.css';
 
 function App({ Component, pageProps }) {
-	const { token, login, logout } = useAuth();
+  const { token, login, logout } = useAuth();
 
-	return (
-		<AuthContext.Provider
-			value={{
-				isLoggedIn: !!token,
-				token: token,
-				login: login,
-				logout: logout,
-			}}
-		>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
-		</AuthContext.Provider>
-	);
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        login: login,
+        logout: logout,
+      }}
+    >
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

@@ -1,24 +1,24 @@
 .switchContainer {
-	display: inline-block;
+  display: inline-block;
 }
 
 .switch {
-	position: relative;
-	display: inline-block;
-	width: 70px;
-	height: 30px;
-	background-color: #a1a1a1;
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+  background-color: #a1a1a1;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .switch.active {
-	background-color: #2196f3;
+  background-color: #2196f3;
 }
 
 .switchToggle {
-	font-size: 16px;
+  font-size: 16px;
 }

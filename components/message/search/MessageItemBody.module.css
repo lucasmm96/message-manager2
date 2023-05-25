@@ -1,13 +1,13 @@
 .itemMessage {
-	box-sizing: border-box;
-	color: black;
-	text-align: justify;
-	width: 100%;
+  box-sizing: border-box;
+  color: black;
+  text-align: justify;
+  width: 100%;
 }
 .itemAuthor {
-	box-sizing: border-box;
-	color: black;
-	text-align: left;
-	width: 100%;
-	font-style: italic;
+  box-sizing: border-box;
+  color: black;
+  text-align: left;
+  width: 100%;
+  font-style: italic;
 }

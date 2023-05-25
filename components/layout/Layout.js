@@ -4,13 +4,13 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 function Layout(props) {
-	return (
-		<div>
-			<Header />
-			<main className={classes.main}>{props.children}</main>
-			<Footer />
-		</div>
-	);
+  return (
+    <div>
+      <Header />
+      <main className={classes.main}>{props.children}</main>
+      <Footer />
+    </div>
+  );
 }
 
 export default Layout;

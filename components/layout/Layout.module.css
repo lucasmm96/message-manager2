@@ -1,34 +1,34 @@
 .main {
-	box-sizing: border-box;
-	padding: 3% 5% 3% 5%;
+  box-sizing: border-box;
+  padding: 3% 5% 3% 5%;
 }
 
 @media screen and (max-width: 1920px) {
-	.main {
-		padding: 4% 5% 4% 5%;
-	}
+  .main {
+    padding: 4% 5% 4% 5%;
+  }
 }
 
 @media screen and (max-width: 1680px) {
-	.main {
-		padding: 5% 5% 5% 5%;
-	}
+  .main {
+    padding: 5% 5% 5% 5%;
+  }
 }
 
 @media screen and (max-width: 1440px) {
-	.main {
-		padding: 6% 5% 6% 5%;
-	}
+  .main {
+    padding: 6% 5% 6% 5%;
+  }
 }
 
 @media screen and (max-width: 992px) {
-	.main {
-		padding: 7% 5% 7% 5%;
-	}
+  .main {
+    padding: 7% 5% 7% 5%;
+  }
 }
 
 @media screen and (max-width: 992px) {
-	.main {
-		padding: 8% 5% 8% 5%;
-	}
+  .main {
+    padding: 8% 5% 8% 5%;
+  }
 }

@@ -28,7 +28,11 @@ function Home() {
     <>
       <Head title="Message Manager" />
       <h1>Welcome to Message Manager</h1>
-      <p>As part of my web learning journey, this is an open-source application developed to store citations, any art created for the message, and plan their publication on social networks.</p>
+      <p>
+        As part of my web learning journey, this is an open-source application
+        developed to store citations, any art created for the message, and plan
+        their publication on social networks.
+      </p>
       <p style={{ marginTop: '50px' }}>Check below some quick options:</p>
       <div className="container">
         <Button
