@@ -54,4 +54,4 @@ function FormInput(props) {
   );
 }
 
-module.exports = FormInput;
+export default FormInput;
