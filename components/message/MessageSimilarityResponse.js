@@ -1,6 +1,6 @@
-import classes from '@/components/message/add/MessageAddResponse.module.css';
+import classes from '@/components/message/MessageSimilarityResponse.module.css';
 
-function MessageAddResponse(props) {
+function MessageSimilarityResponse(props) {
   const response = props.response;
 
   return (
@@ -35,4 +35,4 @@ function MessageAddResponse(props) {
   );
 }
 
-export default MessageAddResponse;
+export default MessageSimilarityResponse;
