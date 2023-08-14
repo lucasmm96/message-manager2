@@ -81,8 +81,8 @@ function Login(props) {
         throw new Error(responseJSON.error);
       }
 
-      auth.login(responseJSON.token);
-      router.replace('/');
+      auth.login(responseJSON);
+			router.replace('/');
     } catch (error) {
       setModalInfo({
         isOpen: true,
