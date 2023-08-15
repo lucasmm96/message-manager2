@@ -3,6 +3,7 @@ import get from '@/utils/httpRequests/get';
 import AuthContext from '@/context/AuthContext';
 import ExpandableBox from '@/components/ui/ExpandableBox';
 import styles from '@/components/message/search/MessageAdmin.module.css';
+import Button from '@/components/ui/Button';
 
 function MessageAdmin() {
   const auth = useContext(AuthContext);
@@ -48,6 +49,14 @@ function MessageAdmin() {
     };
   }, [data, hasMoreData]);
 
+  function approveHandler() {
+    alert('approved!');
+  }
+
+  function rejectHandler() {
+    alert('rejected!');
+  }
+
   return (
     <div>
       <h1 className={styles.title}>Pending Messages</h1>
@@ -73,9 +82,17 @@ function MessageAdmin() {
                 <td>{message.type}</td>
                 <td>{message.status}</td>
                 <td>{message.requester}</td>
-                <td>
-                  <button>Approve</button>
-                  <button>Reject</button>
+                <td className={styles.itemContainer}>
+                  <Button
+                    click={approveHandler}
+                    label="Approve"
+                    disabled={false}
+                  />
+                  <Button
+                    click={rejectHandler}
+                    label="Reject"
+                    disabled={false}
+                  />
                 </td>
               </tr>
               {expandedMessageId === message._id && (

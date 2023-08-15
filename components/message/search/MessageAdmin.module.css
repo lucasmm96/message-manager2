@@ -1,3 +1,19 @@
+.itemContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; /* Altere para space-between */
+  align-items: center; /* Manter alinhados verticalmente */
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 992px) {
+  .itemContainer button {
+    margin: 5px 0;
+  }
+}
+
 /* Adicione estilos para a tabela */
 .table {
   width: 100%;
@@ -26,19 +42,4 @@
 
 .expandableBox button {
   margin-right: 10px;
-}
-
-/* Estilos para botões */
-.button {
-  padding: 8px 16px;
-  font-size: 14px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #2980b9;
 }
