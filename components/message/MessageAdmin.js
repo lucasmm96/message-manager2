@@ -60,7 +60,7 @@ function MessageAdmin() {
                 <td>{message.action}</td>
                 <td>{message.type}</td>
                 <td>{message.status}</td>
-                <td>{message.requesterId}</td>
+                <td>{message.requesterName}</td>
                 <td className={styles.itemContainer}>
                   <Button
                     click={approveHandler}
