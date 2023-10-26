@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, Fragment } from 'react';
+import { useState, useContext, useEffect, Fragment } from 'react';
 import get from '@/utils/httpRequests/get';
 import AuthContext from '@/context/AuthContext';
 import ExpandableBox from '@/components/ui/ExpandableBox';
@@ -9,45 +9,23 @@ function MessageAdmin() {
   const auth = useContext(AuthContext);
 
   const [data, setData] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [expandedMessageId, setExpandedMessageId] = useState(null);
+	const [skip, setSkip] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
-  const pageSize = 2;
-
-  const fetchData = async () => {
-    const response = await get(`/message/pending/list?page=${pageNumber}&size=${pageSize}`, auth.token);
+  const [expandedMessageId, setExpandedMessageId] = useState(null);
+  
+  async function fetchData() {
+    const size = 3;
+    const response = await get(`/message/pending/list?size=${size}&skip=${skip}`, auth.token);
     const responseData = await response.json();
 
-    if (responseData.length === 0) {
-      setHasMoreData(false);
+    if (responseData.length > 0) {
+      setData([...data, ...responseData]);
+      setSkip(data.length + size)
+      setHasMoreData(true);
     } else {
-      setData((prevData) => [...prevData, ...responseData]);
-      setPageNumber((prevPageNumber) => prevPageNumber + 1);
+      setHasMoreData(false);
     }
-  };
-
-  const handleScroll = () => {
-    const isBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
-
-    if (isBottom && hasMoreData) {
-      fetchData();
-    }
-  };
-
-  const handleExpand = (messageId) => {
-    setExpandedMessageId(messageId === expandedMessageId ? null : messageId); // Inverte o estado da expansão
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [data, hasMoreData]);
+  }
 
   function approveHandler() {
     alert('approved!');
@@ -57,9 +35,12 @@ function MessageAdmin() {
     alert('rejected!');
   }
 
+  useEffect(() => { fetchData() }, []);
+
   return (
     <div>
-      <h1 className={styles.title}>Pending Messages</h1>
+    <h1 className={styles.title}>Pending Messages</h1>
+      <p>Counter: {data.length}</p>
       <table className={`${styles.table} table`}>
         <thead>
           <tr>
@@ -75,13 +56,11 @@ function MessageAdmin() {
           {data.map((message) => (
             <Fragment key={message._id}>
               <tr>
-                <td>
-                  <button onClick={() => handleExpand(message._id)}>Open</button>
-                </td>
+                <td><Button click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} label="Open" disabled={false}/></td>
                 <td>{message.action}</td>
                 <td>{message.type}</td>
                 <td>{message.status}</td>
-                <td>{message.requester}</td>
+                <td>{message.requesterId}</td>
                 <td className={styles.itemContainer}>
                   <Button
                     click={approveHandler}
@@ -99,7 +78,7 @@ function MessageAdmin() {
                 <tr>
                   <td colSpan="6">
                     <div className={styles.expandableBox}>
-                      <ExpandableBox action={message.action} />
+                      <ExpandableBox pendingMessage={message} />
                     </div>
                   </td>
                 </tr>
@@ -108,9 +87,12 @@ function MessageAdmin() {
           ))}
         </tbody>
       </table>
-      {hasMoreData && (
-        <p className={styles.scrollInfo}>Scroll to load more...</p>
-      )}
+      {hasMoreData && ( 
+        <div className={styles.load}>
+          <Button click={fetchData} label="Click to load more..." disabled={false}/>
+        </div>
+      )
+      }
     </div>
   );
 }
