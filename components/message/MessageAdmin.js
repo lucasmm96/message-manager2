@@ -2,8 +2,9 @@ import { useState, useContext, useEffect, Fragment } from 'react';
 import get from '@/utils/httpRequests/get';
 import AuthContext from '@/context/AuthContext';
 import ExpandableBox from '@/components/ui/ExpandableBox';
-import styles from '@/components/message/search/MessageAdmin.module.css';
+import styles from '@/components/message/MessageAdmin.module.css';
 import Button from '@/components/ui/Button';
+import Icon from '@/components/ui/Icon';
 
 function MessageAdmin() {
   const auth = useContext(AuthContext);
@@ -56,22 +57,14 @@ function MessageAdmin() {
           {data.map((message) => (
             <Fragment key={message._id}>
               <tr>
-                <td><Button click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} label="Open" disabled={false}/></td>
+                <td><Icon click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} filename={expandedMessageId === message._id ? 'arrow-up.svg' : 'arrow-down.svg'} alt={expandedMessageId === message._id ? 'expand' : 'collapse'} w={18} h={18} /></td>
                 <td>{message.action}</td>
                 <td>{message.type}</td>
                 <td>{message.status}</td>
                 <td>{message.requesterName}</td>
                 <td className={styles.itemContainer}>
-                  <Button
-                    click={approveHandler}
-                    label="Approve"
-                    disabled={false}
-                  />
-                  <Button
-                    click={rejectHandler}
-                    label="Reject"
-                    disabled={false}
-                  />
+                <Icon click={approveHandler} filename='circle-check-solid.svg' alt='approve' w={20} h={20} />
+                <Icon click={rejectHandler} filename='circle-xmark-solid.svg' alt='reject' w={20} h={20} />
                 </td>
               </tr>
               {expandedMessageId === message._id && (
