@@ -36,12 +36,12 @@ function MessageAdmin() {
     alert('rejected!');
   }
 
-  useEffect(() => { fetchData() }, []);
+  useEffect(() => { if (data.length === 0) { fetchData()  } }, []);
 
   return (
     <div>
     <h1 className={styles.title}>Pending Messages</h1>
-      <p>Counter: {data.length}</p>
+      <h3>Records: {data.length}</h3>
       <table className={`${styles.table} table`}>
         <thead>
           <tr>
@@ -81,7 +81,7 @@ function MessageAdmin() {
       </table>
       {hasMoreData && ( 
         <div className={styles.load}>
-          <Button click={fetchData} label="Click to load more..." disabled={false}/>
+          <Button click={fetchData} label="Load more" disabled={false}/>
         </div>
       )
       }
