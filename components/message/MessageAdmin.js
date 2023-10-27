@@ -81,7 +81,7 @@ function MessageAdmin() {
       </table>
       {hasMoreData && ( 
         <div className={styles.load}>
-          <Button click={fetchData} label="Load more" disabled={false}/>
+          <Button click={fetchData} label="Load more" />
         </div>
       )
       }
