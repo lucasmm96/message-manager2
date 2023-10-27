@@ -63,8 +63,8 @@ function MessageAdmin() {
                 <td>{message.type}</td>
                 <td>{message.status}</td>
                 <td>{message.requesterName}</td>
-                <td style={{ textAlign: 'center' }}><Icon click={approveHandler} filename='circle-check-solid.svg' alt='approve' w={20} h={20} /></td>
-                <td style={{ textAlign: 'center' }}><Icon click={rejectHandler} filename='circle-xmark-solid.svg' alt='reject' w={20} h={20} /></td>
+                <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? approveHandler : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
+                <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? rejectHandler : null} filename={message.status === 'Pending' ? 'circle-xmark-solid.svg' : 'disabled-circle-xmark-solid.svg' } alt='reject' w={20} h={20} /></td>
               </tr>
               {expandedMessageId === message._id && (
                 <tr>
