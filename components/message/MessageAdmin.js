@@ -5,12 +5,14 @@ import ExpandableBox from '@/components/ui/ExpandableBox';
 import styles from '@/components/message/MessageAdmin.module.css';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
+import MessageFilterButton from '@/components/message/search/MessageFilterButton';
 
 function MessageAdmin() {
   const auth = useContext(AuthContext);
 
   const tableHeader = ['','Action','Type','Status','Requester','',''];
   const [data, setData] = useState([]);
+  const [filteredData, setfilteredData] = useState({ pending: { data: [], selected: true }, all: { data: [], selected: false } })
 	const [skip, setSkip] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [expandedMessageId, setExpandedMessageId] = useState(null);
@@ -20,14 +22,38 @@ function MessageAdmin() {
     const response = await get(`/message/pending/list?size=${size}&skip=${skip}`, auth.token);
     const responseData = await response.json();
 
-    if (responseData.length > 0) {
-      setData([...data, ...responseData]);
-      setSkip(data.length + size)
-      setHasMoreData(true);
-    } else {
-      setHasMoreData(false);
-    }
+    setData([...data, ...responseData]);
+    setfilteredData({ pending: { data: [...data, ...responseData].filter((message) => message.status === 'Pending'), selected: filteredData.pending.selected }, all: { data: [...data, ...responseData], selected: filteredData.all.selected }});
+    setSkip(data.length + size)
+
+    responseData.length > 0 ? setHasMoreData(true) : setHasMoreData(false);
   }
+
+  function mountData() {
+    const selectedData = (filteredData.pending.selected) ? filteredData.pending.data : filteredData.all.data;
+    if (selectedData.length === 0) return (<p>There is no pending messages</p>)
+    return (selectedData.map((message) => (
+      <Fragment key={message._id}>
+        <tr>
+          <td style={{ textAlign: 'center' }}><Icon click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} filename={expandedMessageId === message._id ? 'arrow-up.svg' : 'arrow-down.svg'} alt={expandedMessageId === message._id ? 'expand' : 'collapse'} w={18} h={18} /></td>
+          <td>{message.action}</td>
+          <td>{message.type}</td>
+          <td>{message.status}</td>
+          <td>{message.requesterName}</td>
+          <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? approveHandler : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
+          <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? rejectHandler : null} filename={message.status === 'Pending' ? 'circle-xmark-solid.svg' : 'disabled-circle-xmark-solid.svg' } alt='reject' w={20} h={20} /></td>
+        </tr>
+        {expandedMessageId === message._id && (
+          <tr>
+            <td colSpan="7">
+              <div className={styles.expandableBox}><ExpandableBox pendingMessage={message} /></div>
+            </td>
+          </tr>
+        )}
+      </Fragment>
+    )))
+  }
+  const tableRows = mountData()
 
   function approveHandler() {
     alert('approved!');
@@ -37,45 +63,35 @@ function MessageAdmin() {
     alert('rejected!');
   }
 
-  useEffect(() => { if (data.length === 0) { fetchData()  } }, []);
+  function pendingMessages() {
+    setfilteredData({ pending: { data: filteredData.pending.data, selected: true }, all: { data: filteredData.all.data, selected: false }});
+  }
+  
+  function allMessages() {
+    setfilteredData({ pending: { data: filteredData.pending.data, selected: false }, all: { data: filteredData.all.data, selected: true }});
+  }
+
+  useEffect(() => { if (filteredData.pending.data.length === 0 || filteredData.all.data.length === 0) fetchData() }, []);
 
   return (
     <div>
       <h1 className={styles.title}>Pending Messages</h1>
-      <h3>Records: {data.length}</h3>
-      {data.length === 0 && (<p>No data to load...</p>)}
-      {data.length > 0 && (
+      <h3>Records: {filteredData.pending.selected ? filteredData.pending.data.length : filteredData.all.data.length }</h3>
+      <div className="container">
+        <MessageFilterButton method={pendingMessages} label="Pending" selected={filteredData.pending.selected}/>
+        <MessageFilterButton method={allMessages} label="All Messages" selected={filteredData.all.selected}/>
+      </div>
         <>
           <table className={`${styles.table} table`}>
             <thead>
               <tr>{tableHeader.map((header) => <th>{header}</th>)}</tr>
             </thead>
             <tbody>
-              {data.map((message) => (
-                <Fragment key={message._id}>
-                  <tr>
-                    <td style={{ textAlign: 'center' }}><Icon click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} filename={expandedMessageId === message._id ? 'arrow-up.svg' : 'arrow-down.svg'} alt={expandedMessageId === message._id ? 'expand' : 'collapse'} w={18} h={18} /></td>
-                    <td>{message.action}</td>
-                    <td>{message.type}</td>
-                    <td>{message.status}</td>
-                    <td>{message.requesterName}</td>
-                    <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? approveHandler : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
-                    <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? rejectHandler : null} filename={message.status === 'Pending' ? 'circle-xmark-solid.svg' : 'disabled-circle-xmark-solid.svg' } alt='reject' w={20} h={20} /></td>
-                  </tr>
-                  {expandedMessageId === message._id && (
-                    <tr>
-                      <td colSpan="7">
-                        <div className={styles.expandableBox}><ExpandableBox pendingMessage={message} /></div>
-                      </td>
-                    </tr>
-                  )}
-                </Fragment>
-              ))}
+              {tableRows}
             </tbody>
           </table>
           {hasMoreData && (<div className={styles.load}><Button click={fetchData} label="Load more" /></div>)}
         </>
-      )}
     </div>
   );
 }
