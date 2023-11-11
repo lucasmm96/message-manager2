@@ -109,52 +109,56 @@ function ExpandableBox(props) {
           </div>
         </form>
       ) : (
-				<form>
-          <FormInput
-            name="message"
-            label="Message"
-            type="text"
-            disabled={true}
-            value={data.message}
-            onChangeHandler={() => {}}
-            onBlurHandler={() => {}}
-          />
-          <FormInput
-            name="author"
-            label="Author"
-            type="text"
-            disabled={true}
-            value={data.author}
-            onChangeHandler={() => {}}
-            onBlurHandler={() => {}}
-          />
-          <FormInput
-            name="post_date"
-            label="Post Date"
-            type="date"
-            disabled={true}
-            value={data.postedAt.substr(0, 10)}
-            onChangeHandler={() => {}}
-            onBlurHandler={() => {}}
-          />
-          <FormInput
-            name="post_link"
-            label="Post Link"
-            type="url"
-            disabled={true}
-            value={data.postUrl.post}
-            onChangeHandler={() => {}}
-            onBlurHandler={() => {}}
-          />
-          <FormInput
-            name="story"
-            label="Story Link"
-            type="url"
-            disabled={true}
-            value={data.postUrl.story}
-            onChangeHandler={() => {}}
-            onBlurHandler={() => {}}
-          />
+        <form className={styles.form}>
+          <div className={styles.column}>
+            <div className={styles.fieldGroup}>
+              <FormInput
+                name="message"
+                label="Message"
+                type="text"
+                disabled={true}
+                value={data.message}
+                onChangeHandler={() => {}}
+                onBlurHandler={() => {}}
+              />
+              <FormInput
+                name="author"
+                label="Author"
+                type="text"
+                disabled={true}
+                value={data.author}
+                onChangeHandler={() => {}}
+                onBlurHandler={() => {}}
+              />
+              <FormInput
+                name="post_date"
+                label="Post Date"
+                type="date"
+                disabled={true}
+                value={data.postedAt.substr(0, 10)}
+                onChangeHandler={() => {}}
+                onBlurHandler={() => {}}
+              />
+              <FormInput
+                name="post_link"
+                label="Post Link"
+                type="url"
+                disabled={true}
+                value={data.postUrl.post}
+                onChangeHandler={() => {}}
+                onBlurHandler={() => {}}
+              />
+              <FormInput
+                name="story"
+                label="Story Link"
+                type="url"
+                disabled={true}
+                value={data.postUrl.story}
+                onChangeHandler={() => {}}
+                onBlurHandler={() => {}}
+              />
+            </div>
+          </div>
         </form>
       )}
     </div>
