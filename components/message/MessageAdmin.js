@@ -10,7 +10,7 @@ import MessageFilterButton from '@/components/message/search/MessageFilterButton
 function MessageAdmin() {
   const auth = useContext(AuthContext);
 
-  const tableHeader = ['','Action','Type','Status','Requester','',''];
+  const tableHeader = ['Expand','Action','Type','Status','Requester','Approve','Reject'];
   const [data, setData] = useState([]);
   const [filteredData, setfilteredData] = useState({ pending: { data: [], selected: true }, all: { data: [], selected: false } })
 	const [skip, setSkip] = useState(0);
@@ -31,17 +31,17 @@ function MessageAdmin() {
 
   function mountData() {
     const selectedData = (filteredData.pending.selected) ? filteredData.pending.data : filteredData.all.data;
-    if (selectedData.length === 0) return (<p>There is no pending messages</p>)
+    if (selectedData.length === 0) return (<tr><td colSpan="7">There is no pending messages</td></tr>)
     return (selectedData.map((message) => (
       <Fragment key={message._id}>
         <tr>
           <td style={{ textAlign: 'center' }}><Icon click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} filename={expandedMessageId === message._id ? 'arrow-up.svg' : 'arrow-down.svg'} alt={expandedMessageId === message._id ? 'expand' : 'collapse'} w={18} h={18} /></td>
-          <td>{message.action}</td>
-          <td>{message.type}</td>
-          <td>{message.status}</td>
-          <td>{message.requesterName}</td>
-          <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? approveHandler : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
-          <td style={{ textAlign: 'center' }}><Icon click={message.status === 'Pending' ? rejectHandler : null} filename={message.status === 'Pending' ? 'circle-xmark-solid.svg' : 'disabled-circle-xmark-solid.svg' } alt='reject' w={20} h={20} /></td>
+          <td style={{ width: '20%' }}>{message.action}</td>
+          <td style={{ width: '20%' }}>{message.type}</td>
+          <td style={{ width: '20%' }}>{message.status}</td>
+          <td style={{ width: '20%' }}>{message.requesterName}</td>
+          <td style={{ textAlign: 'center', width: '7%' }}><Icon click={message.status === 'Pending' ? approveHandler : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
+          <td style={{ textAlign: 'center', width: '7%' }}><Icon click={message.status === 'Pending' ? rejectHandler : null} filename={message.status === 'Pending' ? 'circle-xmark-solid.svg' : 'disabled-circle-xmark-solid.svg' } alt='reject' w={20} h={20} /></td>
         </tr>
         {expandedMessageId === message._id && (
           <tr>
@@ -53,6 +53,7 @@ function MessageAdmin() {
       </Fragment>
     )))
   }
+  
   const tableRows = mountData()
 
   function approveHandler() {
@@ -84,7 +85,7 @@ function MessageAdmin() {
         <>
           <table className={`${styles.table} table`}>
             <thead>
-              <tr>{tableHeader.map((header) => <th>{header}</th>)}</tr>
+              <tr>{tableHeader.map((header, index) => <th key={index}>{header}</th>)}</tr>
             </thead>
             <tbody>
               {tableRows}
