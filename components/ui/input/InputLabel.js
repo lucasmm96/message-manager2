@@ -4,7 +4,7 @@ import IconLink from '@/components/ui/IconLink';
 
 function InputLabel(props) {
   return (
-    <div>
+    <div className={props.type === 'url' && !props.value ? classes.iconPadding : ''}>
       <label className={classes.label} htmlFor={props.htmlFor}>
         {props.label}
       </label>
