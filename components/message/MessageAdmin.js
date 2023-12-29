@@ -34,6 +34,8 @@ function MessageAdmin() {
     responseData.length > 0 ? setHasMoreData(true) : setHasMoreData(false);
   }
 
+  const tableRows = mountData()
+
   function mountData() {
     const selectedData = (filteredData.pending.selected) ? filteredData.pending.data : filteredData.all.data;
     if (selectedData.length === 0) return (<tr><td colSpan="7">There is no pending messages</td></tr>)
@@ -58,8 +60,6 @@ function MessageAdmin() {
       </Fragment>
     )))
   }
-  
-  const tableRows = mountData()
 
   async function approveHandler(message) {
     const requestData = [{ id: message._id }];
@@ -73,9 +73,16 @@ function MessageAdmin() {
     }
   }
 
-  function rejectHandler() {
-    // router.post('/message/reject', checkAuth, isBodyArray, adminController.postRejectMessage);
-    alert('rejected!');
+  async function rejectHandler(message) {
+    const requestData = [{ id: message._id }];
+    try {
+      const response = await post(`/message/reject`, requestData, auth.token);
+      await responseHandler(response);      
+    } catch (error) {
+      setActionResponse({ data: error.message, status: 'ERROR' });
+    } finally {
+      setIsModalOpen(true);
+    }
   }
   
   async function responseHandler(response) {
