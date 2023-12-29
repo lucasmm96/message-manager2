@@ -15,7 +15,7 @@ function MessageAdmin() {
 
   const tableHeader = ['Expand','Action','Type','Status','Requester','Approve','Reject'];
   const [data, setData] = useState([]);
-  const [filteredData, setfilteredData] = useState({ pending: { data: [], selected: true }, all: { data: [], selected: false } })
+  const [filteredData, setfilteredData] = useState({ all: { data: [], selected: true }, pending: { data: [], selected: false } })
 	const [skip, setSkip] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [expandedMessageId, setExpandedMessageId] = useState(null);
@@ -23,7 +23,7 @@ function MessageAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function fetchData() {
-    const size = 3;
+    const size = 20;
     const response = await get(`/message/pending/list?size=${size}&skip=${skip}`, auth.token);
     const responseData = await response.json();
 
@@ -88,13 +88,13 @@ function MessageAdmin() {
       setActionResponse({ data: error.message, status: 'ERROR' });
     }
   }
-
-  function pendingMessages() {
-    setfilteredData({ pending: { data: filteredData.pending.data, selected: true }, all: { data: filteredData.all.data, selected: false }});
-  }
   
   function allMessages() {
-    setfilteredData({ pending: { data: filteredData.pending.data, selected: false }, all: { data: filteredData.all.data, selected: true }});
+    setfilteredData({ all: { data: filteredData.all.data, selected: true }, pending: { data: filteredData.pending.data, selected: false } });
+  }
+
+  function pendingMessages() {
+    setfilteredData({ all: { data: filteredData.all.data, selected: false }, pending: { data: filteredData.pending.data, selected: true } });
   }
 
   useEffect(() => { if (filteredData.pending.data.length === 0 || filteredData.all.data.length === 0) fetchData() }, []);
@@ -103,10 +103,10 @@ function MessageAdmin() {
     <div>
       <ModalResults isModalOpen={isModalOpen} responseStatus={actionResponse.status} responseData={actionResponse.data} onCloseHandler={() => setIsModalOpen(false)}/>
       <h1 className={styles.title}>Pending Messages</h1>
-      <h3>Records: {filteredData.pending.selected ? filteredData.pending.data.length : filteredData.all.data.length }</h3>
+      <h3>Records: {filteredData.all.selected ? filteredData.all.data.length : filteredData.pending.data.length }</h3>
       <div className="container">
-        <MessageFilterButton method={pendingMessages} label="Pending" selected={filteredData.pending.selected}/>
         <MessageFilterButton method={allMessages} label="All Messages" selected={filteredData.all.selected}/>
+        <MessageFilterButton method={pendingMessages} label="Pending" selected={filteredData.pending.selected}/>
       </div>
         <>
           <table className={`${styles.table} table`}>
