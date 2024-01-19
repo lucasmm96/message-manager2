@@ -64,7 +64,7 @@ function MessageEditForm(props) {
       const responseJSON = await response.json();
       const responseStatusCode = response.status;
 
-			setResponseData(<MessageChangeResponse response={responseJSON} />);
+      setResponseData(<MessageChangeResponse response={responseJSON} />);
 
       const { resStatus, resData } = statusCodeHandler(responseStatusCode);
 

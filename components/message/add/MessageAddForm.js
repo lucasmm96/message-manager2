@@ -59,7 +59,7 @@ function MessageAddForm() {
   }
 
   function closeHandler() {
-		setIsModalOpen(false);
+    setIsModalOpen(false);
     router.replace('/message/add');
   }
 

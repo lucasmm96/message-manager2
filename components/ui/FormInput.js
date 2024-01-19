@@ -39,7 +39,7 @@ function FormInput(props) {
             type={props.type}
             name={props.name}
             value={props.value || ''}
-						disabled={props.disabled || false}
+            disabled={props.disabled || false}
             onChangeHandler={onChangeHandler}
             onBlurHandler={onBlurHandler}
           />

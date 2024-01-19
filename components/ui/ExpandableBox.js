@@ -2,9 +2,9 @@ import FormInput from '@/components/ui/FormInput';
 import styles from '@/components/ui/ExpandableBox.module.css';
 
 function ExpandableBox(props) {
-	const action = props.pendingMessage.action;
-	const data = props.pendingMessage.data;
-	
+  const action = props.pendingMessage.action;
+  const data = props.pendingMessage.data;
+
   return (
     <div className={styles.expandableContent}>
       {action === 'Update' ? (

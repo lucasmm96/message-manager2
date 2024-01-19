@@ -16,7 +16,7 @@ function MessageAdmin() {
   const tableHeader = ['Expand','Action','Type','Status','Requester','Approve','Reject'];
   const [data, setData] = useState([]);
   const [filteredData, setfilteredData] = useState({ all: { data: [], selected: true }, pending: { data: [], selected: false } })
-	const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [expandedMessageId, setExpandedMessageId] = useState(null);
   const [actionResponse, setActionResponse] = useState({ data: {}, status: 0 });

@@ -7,13 +7,13 @@ import MessageAdmin from '@/components/message/MessageAdmin';
 function Admin() {
   const router = useRouter();
   const token = useContext(AuthContext).token;
-	const isAdmin = useContext(AuthContext).isAdmin;
+  const isAdmin = useContext(AuthContext).isAdmin;
 
   useEffect(() => { if (!token || !isAdmin) router.replace('/auth/login') }, [token, isAdmin]);
 
   return (
     <>
-			<Head title="Admin Painel" />
+      <Head title="Admin Painel" />
       {token && isAdmin && <MessageAdmin />}
       {!token || !isAdmin && null}
     </>

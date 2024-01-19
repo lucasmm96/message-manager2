@@ -12,7 +12,7 @@ function App({ Component, pageProps }) {
     <AuthContext.Provider
       value={{
         isLoggedIn: !!token,
-				isAdmin: isAdmin,
+        isAdmin: isAdmin,
         token: token,
         login: login,
         logout: logout,
