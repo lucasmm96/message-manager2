@@ -1,0 +1,35 @@
+.expandButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.expandButton:hover {
+  background-color: #2980b9;
+}
+
+.expandableContent {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+}
+
+.column {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+}

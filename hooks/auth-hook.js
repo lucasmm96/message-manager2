@@ -2,14 +2,17 @@ import { useState } from 'react';
 
 function useAuth() {
   const [token, setToken] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  function login(token) {
-    setToken(token);
+  function login(args) {
+    setToken(args.token);
+    setIsAdmin(args.admin);
+
     const tokenExpirationDate = new Date().getTime() + 60 * 60 * 1000;
     localStorage.setItem(
       'token',
       JSON.stringify({
-        value: token,
+        value: args.token,
         expirationDate: tokenExpirationDate,
       })
     );
@@ -18,9 +21,10 @@ function useAuth() {
   function logout() {
     localStorage.removeItem('token');
     setToken(null);
+    setIsAdmin(false);
   }
 
-  return { token, login, logout };
+  return { token, isAdmin, login, logout };
 }
 
 export default useAuth;

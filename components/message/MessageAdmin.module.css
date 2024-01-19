@@ -1,0 +1,50 @@
+.itemContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; /* Altere para space-between */
+  align-items: center; /* Manter alinhados verticalmente */
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 992px) {
+  .itemContainer button {
+    margin: 5px 0;
+  }
+}
+
+/* Adicione estilos para a tabela */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para a caixa expansível */
+.expandableBox {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.expandableBox button {
+  margin-right: 10px;
+}
+
+.load {
+  margin-top: 20px;
+  text-align: center;
+}

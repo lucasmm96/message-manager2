@@ -5,7 +5,7 @@ import AuthContext from '@/context/AuthContext';
 import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
-import MessageAddResponse from './MessageAddResponse';
+import MessageChangeResponse from '@/components/message/MessageChangeResponse';
 
 function MessageAddForm() {
   const router = useRouter();
@@ -37,7 +37,7 @@ function MessageAddForm() {
       const responseJSON = await response.json();
       const responseStatusCode = response.status;
 
-      setResponseData(<MessageAddResponse response={responseJSON} />);
+      setResponseData(<MessageChangeResponse response={responseJSON} />);
 
       const { resStatus, resData } = statusCodeHandler(responseStatusCode);
 
@@ -60,7 +60,7 @@ function MessageAddForm() {
 
   function closeHandler() {
     setIsModalOpen(false);
-    router.replace('/message/list');
+    router.replace('/message/add');
   }
 
   return (

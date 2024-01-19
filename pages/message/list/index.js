@@ -9,27 +9,25 @@ function ListMessage(props) {
   const router = useRouter();
   const token = useContext(AuthContext).token;
 
-  useEffect(() => {
-    if (!token) {
-      router.replace('/auth/login');
-    }
-  }, [token]);
-
+  useEffect(() => { if (!token) router.replace('/auth/login') }, [token]);
   return (
     <>
-      {token && <MessageSearch messages={props.messages} />}
+      {token && <MessageSearch data={props} />}
       {!token && null}
     </>
   );
 }
 
 export async function getServerSideProps() {
-  const response = await get('/message/list');
-  const data = await response.json();
+  const size = 20;
+  const response = await get(`/message/list?size=${size}&skip=0`);
+  const responseData = await response.json();
 
   return {
     props: {
-      messages: data,
+      message: [ ...responseData ],
+      size: size,
+      skip: responseData.length + size
     },
   };
 }

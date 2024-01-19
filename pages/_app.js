@@ -6,12 +6,13 @@ import useAuth from '@/hooks/auth-hook';
 import '@/styles/globals.css';
 
 function App({ Component, pageProps }) {
-  const { token, login, logout } = useAuth();
+  const { token, isAdmin, login, logout } = useAuth();
 
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: !!token,
+        isAdmin: isAdmin,
         token: token,
         login: login,
         logout: logout,

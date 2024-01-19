@@ -6,13 +6,15 @@ function Icon(props) {
   return (
     <>
       <Image
+        className={props.click ? classes.pointer : ''}
         src={`/icons/${props.filename}`}
         alt={props.alt}
         width={props.w}
         height={props.h}
         priority
+        onClick={props.click || (() => {})}
       />
-      {props.label ? <span className={classes.text}>{props.label}</span> : ''}
+      {props.label && <span className={classes.text}>{props.label}</span>}
     </>
   );
 }

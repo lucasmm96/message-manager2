@@ -1,132 +1,104 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import MessageFilterButton from '@/components/message/search/MessageFilterButton';
 import MessageFilterInput from '@/components/message/search/MessageFilterInput';
 
 function MessageFilter(props) {
-  const messages = props.data;
-
-  const [selections, setSelections] = useState({
-    allMessages: true,
-    postedMessages: false,
-    notPostedMessages: false,
-    pendingMessages: false,
-    customSearch: false,
-  });
-
+  const [data, setData] = useState(props.data);
+  const [filteredData, setFilteredData] = useState([ ...props.data.full.messages ]);
   const [searchText, setSearchText] = useState('');
 
   function allMessages() {
-    setSelections({
-      allMessages: true,
-      postedMessages: false,
-      notPostedMessages: false,
-      pendingMessages: false,
-      customSearch: false,
-    });
-    props.onApplyFilter(messages);
+    setData(defineFilter('full'));
+    setFilteredData(data.full.messages);
+    props.onApplyFilter(defineFilter('full'), data.full.messages);
   }
 
   function postedMessages() {
-    const filteredData = messages.filter(
-      (message) => new Date(message.postedAt) <= new Date()
-    );
-
-    setSelections({
-      allMessages: false,
-      postedMessages: true,
-      notPostedMessages: false,
-      pendingMessages: false,
-      customSearch: false,
-    });
-    props.onApplyFilter(filteredData);
+    setData(defineFilter('posted'));
+    setFilteredData(data.posted.messages);
+    props.onApplyFilter(defineFilter('posted'), data.posted.messages);
   }
 
   function notPostedMessages() {
-    const filteredData = messages.filter(
-      (message) => new Date(message.postedAt) >= new Date()
-    );
-    setSelections({
-      allMessages: false,
-      postedMessages: false,
-      notPostedMessages: true,
-      pendingMessages: false,
-      customSearch: false,
-    });
-    props.onApplyFilter(filteredData);
+    setData(defineFilter('not_posted'));
+    setFilteredData(data.not_posted.messages);
+    props.onApplyFilter(defineFilter('not_posted'), data.not_posted.messages);
   }
 
   function pendingMessages() {
-    const filteredData = messages.filter(
-      (message) => message.postUrl.post === '' || message.postUrl.story === ''
-    );
-    setSelections({
-      allMessages: false,
-      postedMessages: false,
-      notPostedMessages: false,
-      pendingMessages: true,
-      customSearch: false,
-    });
-    props.onApplyFilter(filteredData);
+    setData(defineFilter('pending'));
+    setFilteredData(data.pending.messages);
+    props.onApplyFilter(defineFilter('pending'), data.pending.messages);
   }
 
-  function changeHandler(event) {
+  function customSearch(event) {
     setSearchText(event.target.value);
-    customSearch();
-  }
+    const currentData = getSelectedMessages({ ...data });
 
-  function customSearch() {
-    let filteredData = messages;
+    const customFilter = { ...data };
+    customFilter.custom.selected = true;
+    setData(customFilter);
 
-    if (searchText.length > 0) {
-      filteredData = messages.filter((item) => {
+    if (event.target.value.length > 0) {
+      const newData = currentData.filter((message) => {
         return (
-          item.message.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.author.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.postedAt.includes(searchText)
+          message.message.toLowerCase().includes(searchText.toLowerCase()) ||
+          message.author.toLowerCase().includes(searchText.toLowerCase()) ||
+          message.postedAt.includes(searchText)
         );
       });
+      setFilteredData(newData);
+    } else {
+      setFilteredData(currentData);
     }
-
-    setSelections({
-      allMessages: false,
-      postedMessages: false,
-      notPostedMessages: false,
-      pendingMessages: false,
-      customSearch: true,
-    });
-
-    props.onApplyFilter(filteredData);
+    props.onApplyFilter(data, filteredData);
   }
+
+  function getSelectedMessages(data) {
+    for (const key in data) if (data[key].selected) return data[key].messages;
+    return [];
+  }
+
+  function defineFilter(field) {
+    const filter = { ...data };
+    for (const item in filter) filter[item].selected = false;
+    filter[field].selected = true;
+    return filter;
+  }
+
+  useEffect(() => {
+    props.onApplyFilter(data, filteredData);
+  }, [data, filteredData, props]);
 
   return (
     <div className="container">
       <MessageFilterButton
         method={allMessages}
         label="All"
-        selected={selections.allMessages}
+        selected={data.full.selected}
       />
       <MessageFilterButton
         method={postedMessages}
         label="Posted"
-        selected={selections.postedMessages}
+        selected={data.posted.selected}
       />
       <MessageFilterButton
         method={notPostedMessages}
         label="Not Posted"
-        selected={selections.notPostedMessages}
+        selected={data.not_posted.selected}
       />
       <MessageFilterButton
         method={pendingMessages}
         label="Pending"
-        selected={selections.pendingMessages}
+        selected={data.pending.selected}
       />
       <MessageFilterInput
-        method={changeHandler}
+        method={customSearch}
         label="Custom Search"
-        selected={selections.customSearch}
+        selected={data.custom.selected}
         value={searchText}
-        onChangeHandler={changeHandler}
+        onChangeHandler={customSearch}
       />
     </div>
   );

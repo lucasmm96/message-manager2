@@ -5,6 +5,7 @@ import AuthContext from '@/context/AuthContext';
 import post from '@/utils/httpRequests/post';
 import statusCodeHandler from '@/utils/statusCodeHandler';
 import MessageForm from '@/components/message/form/MessageForm';
+import MessageChangeResponse from '@/components/message/MessageChangeResponse';
 
 function MessageEditForm(props) {
   const router = useRouter();
@@ -63,7 +64,7 @@ function MessageEditForm(props) {
       const responseJSON = await response.json();
       const responseStatusCode = response.status;
 
-      setResponseData(responseJSON.message);
+      setResponseData(<MessageChangeResponse response={responseJSON} />);
 
       const { resStatus, resData } = statusCodeHandler(responseStatusCode);
 

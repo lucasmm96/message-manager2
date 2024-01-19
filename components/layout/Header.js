@@ -44,6 +44,11 @@ function MainNavigation() {
                   {auth.isLoggedIn ? 'Logout' : 'Login'}
                 </a>
               </li>
+              {auth.isAdmin && (
+                <li className={classes.right}>
+                  <Link href="/message/admin">Admin</Link>
+                </li>
+              )}
               <li className={classes.right}>
                 <Link href="/message/add">Add New Message</Link>
               </li>
@@ -61,6 +66,11 @@ function MainNavigation() {
                 <li>
                   <Link href="/message/add">Add New Message</Link>
                 </li>
+                {auth.isAdmin && (
+                  <li>
+                    <Link href="/message/admin">Admin</Link>
+                  </li>
+                )}
                 <li>
                   <a onClick={authHandler}>
                     {auth.isLoggedIn ? 'Logout' : 'Login'}
