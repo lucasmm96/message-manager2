@@ -50,6 +50,14 @@ function MessageForm(props) {
     });
   }
 
+  function onPreviousRecord() {
+    props.onPreviousRecord();
+  }
+
+  function onNextRecord() {
+    props.onNextRecord();
+  }
+
   function onSubmitHandler(event) {
     event.preventDefault();
 
@@ -175,7 +183,21 @@ function MessageForm(props) {
               />
             </>
           }
-          actions={
+          actions={[
+            <>
+              <Button
+                label="Previous"
+                classes="containerItem"
+                click={onPreviousRecord}
+                disabled={!validForm}
+              />
+              <Button
+                label="Next"
+                classes="containerItem"
+                click={onNextRecord}
+                disabled={!validForm}
+              />
+            </>,
             <>
               <Button
                 label="Save"
@@ -196,6 +218,7 @@ function MessageForm(props) {
                 />
               )}
             </>
+            ]
           }
         />
       </div>

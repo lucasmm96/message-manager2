@@ -4,7 +4,11 @@ function Form(props) {
   return (
     <form className={classes.form}>
       <div className={classes.formGroup}>{props.input}</div>
-      <div className={classes.formContainer}>{props.actions}</div>
+      {props.actions.map((action, index) => (
+        <div key={index} className={classes.formContainer}>
+          {action}
+        </div>
+      ))}
     </form>
   );
 }
