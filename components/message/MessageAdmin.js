@@ -29,7 +29,7 @@ function MessageAdmin() {
 
     setData([...data, ...responseData]);
     setfilteredData({ pending: { data: [...data, ...responseData].filter((message) => message.status === 'Pending'), selected: filteredData.pending.selected }, all: { data: [...data, ...responseData], selected: filteredData.all.selected }});
-    setSkip(data.length + size)
+    setSkip(data.length)
 
     responseData.length > 0 ? setHasMoreData(true) : setHasMoreData(false);
   }
