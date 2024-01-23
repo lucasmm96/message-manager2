@@ -35,7 +35,7 @@ function MessageSearch(props) {
       newData.pending.messages = newMessages.filter((message) => message.postUrl.post === '' || message.postUrl.story === '');
       
       applyFilter(newData,newData[selected].messages);
-      setSkip(newMessages.length + size);
+      setSkip(newMessages.length);
       setHasMoreData(true);
     } else {
       setHasMoreData(false);

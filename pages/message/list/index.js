@@ -20,14 +20,15 @@ function ListMessage(props) {
 
 export async function getServerSideProps() {
   const size = 20;
-  const response = await get(`/message/list?size=${size}&skip=0`);
+  const skip = 0;
+  const response = await get(`/message/list?size=${size}&skip=${skip}`);
   const responseData = await response.json();
 
   return {
     props: {
       message: [ ...responseData ],
       size: size,
-      skip: responseData.length + size
+      skip: responseData.length
     },
   };
 }
