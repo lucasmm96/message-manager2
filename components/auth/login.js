@@ -133,7 +133,7 @@ function Login(props) {
             />
           </>
         }
-        actions={
+        actions={[
           <>
             <Button
               label="Login"
@@ -147,7 +147,7 @@ function Login(props) {
               click={onSelectSignupHandler}
             />
           </>
-        }
+        ]}
       />
     </>
   );
