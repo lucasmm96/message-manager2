@@ -20,18 +20,13 @@ function FormInput(props) {
 
   return (
     <div className={classes.group}>
-      {props.type !== 'url' && (
-        <InputLabel htmlFor={props.name} label={props.label} />
-      )}
-      {props.type === 'url' && (
-        <InputLabel
-          htmlFor={props.name}
-          href={props.href}
-          label={props.label}
-          type={props.type}
-          value={props.value}
-        />
-      )}
+      <InputLabel
+        htmlFor={props.name}
+        href={props.href}
+        label={props.label}
+        type={props.type}
+        value={props.value}
+      />
       {props.type !== 'switcher' && (
         <>
           <TextInput
