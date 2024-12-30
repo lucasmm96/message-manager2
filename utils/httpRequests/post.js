@@ -5,7 +5,7 @@ async function post(url, data, token) {
     postHeaders.Authorization = 'Bearer ' + token;
   }
 
-  const response = await fetch(`${process.env.API_URL}${url}`, {
+  const response = await fetch(`${process.env.API_URL || "http://localhost:3000"}${url}`, {
     method: 'POST',
     headers: postHeaders,
     body: JSON.stringify(data),

@@ -13,7 +13,7 @@ import ModalResults from '@/components/message/form/ModalResults';
 function MessageAdmin() {
   const auth = useContext(AuthContext);
 
-  const tableHeader = ['Expand','Action','Type','Status','Requester','Approve','Reject'];
+  const tableHeader = ['Expand','Action','Type','Requested At','Status','Requester','Approve','Reject'];
   const [data, setData] = useState([]);
   const [filteredData, setfilteredData] = useState({ all: { data: [], selected: true }, pending: { data: [], selected: false } })
   const [skip, setSkip] = useState(0);
@@ -45,6 +45,7 @@ function MessageAdmin() {
           <td style={{ textAlign: 'center' }}><Icon click={() => { expandedMessageId === message._id ? setExpandedMessageId(null) : setExpandedMessageId(message._id) }} filename={expandedMessageId === message._id ? 'arrow-up.svg' : 'arrow-down.svg'} alt={expandedMessageId === message._id ? 'expand' : 'collapse'} w={18} h={18} /></td>
           <td style={{ width: '20%' }}>{message.action}</td>
           <td style={{ width: '20%' }}>{message.type}</td>
+          <td style={{ width: '20%' }}>{message.requestedAt.substring(0, 10) +  ' ' + message.requestedAt.substring(11, 19)}</td>
           <td style={{ width: '20%' }}>{message.status}</td>
           <td style={{ width: '20%' }}>{message.requesterName}</td>
           <td style={{ textAlign: 'center', width: '7%' }}><Icon click={message.status === 'Pending' ? () => approveHandler(message) : null} filename={message.status === 'Pending' ? 'circle-check-solid.svg' : 'disabled-circle-check-solid.svg' } alt='approve' w={20} h={20} /></td>
@@ -52,7 +53,7 @@ function MessageAdmin() {
         </tr>
         {expandedMessageId === message._id && (
           <tr>
-            <td colSpan="7">
+            <td colSpan="8">
               <div className={styles.expandableBox}><ExpandableBox pendingMessage={message} /></div>
             </td>
           </tr>
